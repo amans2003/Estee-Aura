@@ -212,6 +212,45 @@ function initCountdown() {
   window._countdownTimer = setInterval(tick, 1000);
 }
 
+// ─── YouTube Reels HTML (pre-built to avoid nested template literal issues) ────
+const REEL_VIDS = [
+  { id: 'Nnmrx_IXy-c', title: 'Ayurvedic Daily Skincare Routine' },
+  { id: 'Oz4FAT_hkO4',  title: 'Benefits of Kumkumadi Face Oil' },
+  { id: '9wYiT0LNFPE',  title: 'Turmeric Face Mask at Home' },
+  { id: 'hFZFjoX2cGg',  title: 'Natural Glow with Ayurvedic Herbs' },
+  { id: 'd4QJSMkLXnI',  title: 'Ayurvedic Secrets for Clear Skin' },
+  { id: '3noYHr2N7EY',  title: 'Rose Water & Sandalwood Skin Ritual' },
+];
+function reelMuteUrl(id) {
+  return 'https://www.youtube.com/embed/' + id + '?autoplay=1&mute=1&loop=1&playlist=' + id + '&controls=0&rel=0&enablejsapi=1&modestbranding=1&playsinline=1&iv_load_policy=3&fs=0';
+}
+function reelUnmuteUrl(id) {
+  return 'https://www.youtube.com/embed/' + id + '?autoplay=1&mute=0&loop=1&playlist=' + id + '&controls=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3';
+}
+const reelsHTML = [...REEL_VIDS, ...REEL_VIDS].map(function(v) {
+  return '<div class="reel-card flex-shrink-0" style="width:190px">' +
+    '<div class="relative rounded-2xl overflow-hidden" style="aspect-ratio:9/16;border:2px solid rgba(77,124,15,0.35)">' +
+      '<iframe' +
+        ' data-mute-src="' + reelMuteUrl(v.id) + '"' +
+        ' data-unmute-src="' + reelUnmuteUrl(v.id) + '"' +
+        ' src="' + reelMuteUrl(v.id) + '"' +
+        ' allow="autoplay; encrypted-media; picture-in-picture"' +
+        ' allowfullscreen loading="lazy"' +
+        ' class="w-full h-full border-0 pointer-events-none absolute inset-0"' +
+        ' title="' + v.title + '" style="transform:scale(1.01)">' +
+      '</iframe>' +
+      '<div style="position:absolute;bottom:0;left:0;width:100%;height:42px;background:linear-gradient(to top,rgba(26,46,5,0.9),transparent);pointer-events:none;z-index:5"></div>' +
+      '<div class="reel-overlay absolute inset-0 flex flex-col items-center justify-center cursor-pointer" style="background:rgba(26,46,5,0.25);z-index:6">' +
+        '<div class="w-14 h-14 rounded-full flex items-center justify-center mb-2" style="background:rgba(77,124,15,0.75);backdrop-filter:blur(8px);border:2px solid rgba(212,172,13,0.6)">' +
+          '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
+        '</div>' +
+        '<p class="text-xs font-bold" style="color:#D4AC0D;text-shadow:0 1px 6px rgba(0,0,0,0.8)">Tap to unmute</p>' +
+      '</div>' +
+    '</div>' +
+    '<p class="text-xs mt-2 text-center px-1 leading-snug" style="color:rgba(255,255,255,0.5);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">' + v.title + '</p>' +
+  '</div>';
+}).join('');
+
 // ─── Page: Home ───────────────────────────────────────────────────────────────
 function renderHome(el) {
   const heroImgs = [
@@ -608,45 +647,7 @@ function renderHome(el) {
     </div>
     <div class="reels-viewport overflow-hidden">
       <div class="reels-track flex gap-5 px-6" style="width:max-content">
-        ${(function(){
-          const vids = [
-            { id:'Nnmrx_IXy-c', title:'Ayurvedic Daily Skincare Routine' },
-            { id:'Oz4FAT_hkO4', title:'Benefits of Kumkumadi Face Oil' },
-            { id:'9wYiT0LNFPE', title:'Turmeric Face Mask at Home' },
-            { id:'hFZFjoX2cGg', title:'Natural Glow with Ayurvedic Herbs' },
-            { id:'d4QJSMkLXnI', title:'Ayurvedic Secrets for Clear Skin' },
-            { id:'3noYHr2N7EY', title:'Rose Water &amp; Sandalwood Skin Ritual' },
-          ];
-          const muteUrl = id =>
-            \`https://www.youtube.com/embed/\${id}?autoplay=1&mute=1&loop=1&playlist=\${id}&controls=0&rel=0&enablejsapi=1&modestbranding=1&playsinline=1&iv_load_policy=3&fs=0\`;
-          const unmuteUrl = id =>
-            \`https://www.youtube.com/embed/\${id}?autoplay=1&mute=0&loop=1&playlist=\${id}&controls=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3\`;
-          return [...vids, ...vids].map(v => \`
-          <div class="reel-card flex-shrink-0" style="width:190px">
-            <div class="relative rounded-2xl overflow-hidden" style="aspect-ratio:9/16;border:2px solid rgba(77,124,15,0.35)">
-              <iframe
-                data-mute-src="\${muteUrl(v.id)}"
-                data-unmute-src="\${unmuteUrl(v.id)}"
-                src="\${muteUrl(v.id)}"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowfullscreen loading="lazy"
-                class="w-full h-full border-0 pointer-events-none absolute inset-0"
-                title="\${v.title}" style="transform:scale(1.01)">
-              </iframe>
-              <!-- Blocks YouTube watermark bottom-right -->
-              <div style="position:absolute;bottom:0;right:0;width:100%;height:38px;background:linear-gradient(to top,rgba(26,46,5,0.85),transparent);pointer-events:none;z-index:5"></div>
-              <!-- Overlay with brand play button -->
-              <div class="reel-overlay absolute inset-0 flex flex-col items-center justify-center cursor-pointer" style="background:rgba(26,46,5,0.28);z-index:6">
-                <div class="w-14 h-14 rounded-full flex items-center justify-center mb-2"
-                     style="background:rgba(77,124,15,0.75);backdrop-filter:blur(8px);border:2px solid rgba(212,172,13,0.6)">
-                  <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-                <p class="text-xs font-bold" style="color:#D4AC0D;text-shadow:0 1px 6px rgba(0,0,0,0.8)">Tap to unmute</p>
-              </div>
-            </div>
-            <p class="text-xs mt-2 text-center px-1 leading-snug" style="color:rgba(255,255,255,0.5);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">\${v.title}</p>
-          </div>\`).join('');
-        })()}
+        ${reelsHTML}
       </div>
     </div>
   </section>
