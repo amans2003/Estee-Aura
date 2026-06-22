@@ -295,11 +295,11 @@ function renderHome(el) {
         <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Browse by Category</p>
         <h2 class="text-3xl font-extrabold text-earth">Shop Our Collections</h2>
       </div>
-      <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4">
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-6 sm:gap-8">
         ${CATS.map(c => `
         <button onclick="navigate('products')"
-                class="group flex flex-col items-center gap-3 p-3 sm:p-4 rounded-2xl bg-cream hover:bg-herb/10 border border-transparent hover:border-herb/20 transition-all duration-300">
-          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden shadow-md group-hover:shadow-lg transition-shadow flex-shrink-0">
+                class="group flex flex-col items-center gap-3">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-300 flex-shrink-0">
             <img src="${c.img}" alt="${c.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           </div>
           <div class="text-center">
@@ -432,7 +432,7 @@ function renderHome(el) {
         <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Quality Assurance</p>
         <h2 class="text-2xl font-extrabold text-earth">Trusted & Certified</h2>
       </div>
-      <div class="flex flex-wrap justify-center gap-4 fade-up">
+      <div class="flex flex-wrap justify-center gap-3 fade-up">
         ${[
           { icon:'🌾', name:'USDA Organic' },
           { icon:'🏭', name:'GMP Certified' },
@@ -440,9 +440,9 @@ function renderHome(el) {
           { icon:'🔬', name:'Dermatologically Tested' },
           { icon:'🌱', name:'100% Natural' },
         ].map(c => `
-        <div class="flex flex-col items-center gap-2 bg-cream rounded-2xl px-6 py-4 border border-herb/15 min-w-[110px] hover:border-herb/40 transition-colors">
-          <span class="text-3xl">${c.icon}</span>
-          <p class="text-earth font-semibold text-xs text-center">${c.name}</p>
+        <div class="flex flex-col items-center gap-1.5 bg-cream rounded-xl px-4 py-3 border border-herb/15 hover:border-herb/40 transition-colors w-28">
+          <span class="text-2xl">${c.icon}</span>
+          <p class="text-earth font-semibold text-[11px] text-center leading-tight">${c.name}</p>
         </div>`).join('')}
       </div>
     </div>
