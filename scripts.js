@@ -166,24 +166,54 @@ function initHeroSlider() {
   _heroTimer = setInterval(() => goTo(cur + 1), 3000);
 }
 
-// ─── YouTube Reels ────────────────────────────────────────────────────────────
+// ─── YouTube Reels lightbox ───────────────────────────────────────────────────
 function initReels() {
   const track = document.querySelector('.reels-track');
+
+  // Build lightbox overlay once
+  let lb = document.getElementById('reel-lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'reel-lightbox';
+    lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:16px';
+    lb.innerHTML =
+      '<div style="position:relative;width:min(340px,90vw);aspect-ratio:9/16">' +
+        '<iframe id="reel-lb-iframe" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen' +
+          ' style="width:100%;height:100%;border:0;border-radius:16px;display:block"></iframe>' +
+        '<button id="reel-lb-close" style="position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:#2d4a06;border:2px solid #D4AC0D;color:#D4AC0D;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">✕</button>' +
+      '</div>';
+    document.body.appendChild(lb);
+  }
+
+  const lbIframe = lb.querySelector('#reel-lb-iframe');
+  const lbClose  = lb.querySelector('#reel-lb-close');
+
+  function closeLightbox() {
+    lb.style.display = 'none';
+    lbIframe.src = '';
+    document.body.style.overflow = '';
+    // Resume carousel
+    if (track) track.classList.remove('is-paused');
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
   document.querySelectorAll('.reel-overlay').forEach(overlay => {
     overlay.addEventListener('click', () => {
-      const card   = overlay.closest('.reel-card');
-      const iframe = card.querySelector('iframe');
-      // Swap to unmuted src (controls=1, mute=0) — most reliable cross-browser unmute
-      const unmuteUrl = iframe.dataset.unmuteSrc;
-      if (unmuteUrl) {
-        iframe.src = unmuteUrl;
-        iframe.classList.remove('pointer-events-none');
-      }
-      // Hide overlay
-      overlay.style.opacity = '0';
-      overlay.style.pointerEvents = 'none';
-      // Pause carousel so user can watch comfortably
+      const card  = overlay.closest('.reel-card');
+      const src   = card.querySelector('iframe').dataset.unmuteSrc;
+      if (!src) return;
+      // Pause carousel, open lightbox
       if (track) track.classList.add('is-paused');
+      lbIframe.src = src;
+      lb.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     });
   });
 }
@@ -228,8 +258,8 @@ function reelUnmuteUrl(id) {
   return 'https://www.youtube.com/embed/' + id + '?autoplay=1&mute=0&loop=1&playlist=' + id + '&controls=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3';
 }
 const reelsHTML = [...REEL_VIDS, ...REEL_VIDS].map(function(v) {
-  return '<div class="reel-card flex-shrink-0" style="width:190px">' +
-    '<div class="relative rounded-2xl overflow-hidden" style="aspect-ratio:9/16;border:2px solid rgba(77,124,15,0.35)">' +
+  return '<div class="reel-card flex-shrink-0" style="width:185px">' +
+    '<div class="relative rounded-2xl overflow-hidden shadow-md" style="aspect-ratio:9/16;border:2px solid rgba(77,124,15,0.25)">' +
       '<iframe' +
         ' data-mute-src="' + reelMuteUrl(v.id) + '"' +
         ' data-unmute-src="' + reelUnmuteUrl(v.id) + '"' +
@@ -239,15 +269,15 @@ const reelsHTML = [...REEL_VIDS, ...REEL_VIDS].map(function(v) {
         ' class="w-full h-full border-0 pointer-events-none absolute inset-0"' +
         ' title="' + v.title + '" style="transform:scale(1.01)">' +
       '</iframe>' +
-      '<div style="position:absolute;bottom:0;left:0;width:100%;height:42px;background:linear-gradient(to top,rgba(26,46,5,0.9),transparent);pointer-events:none;z-index:5"></div>' +
-      '<div class="reel-overlay absolute inset-0 flex flex-col items-center justify-center cursor-pointer" style="background:rgba(26,46,5,0.25);z-index:6">' +
-        '<div class="w-14 h-14 rounded-full flex items-center justify-center mb-2" style="background:rgba(77,124,15,0.75);backdrop-filter:blur(8px);border:2px solid rgba(212,172,13,0.6)">' +
+      '<div style="position:absolute;bottom:0;left:0;width:100%;height:40px;background:linear-gradient(to top,rgba(247,250,240,0.7),transparent);pointer-events:none;z-index:5"></div>' +
+      '<div class="reel-overlay absolute inset-0 flex flex-col items-center justify-center cursor-pointer" style="background:rgba(45,74,6,0.22);z-index:6">' +
+        '<div class="w-14 h-14 rounded-full flex items-center justify-center mb-2" style="background:rgba(45,74,6,0.7);backdrop-filter:blur(8px);border:2px solid #D4AC0D">' +
           '<svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
         '</div>' +
-        '<p class="text-xs font-bold" style="color:#D4AC0D;text-shadow:0 1px 6px rgba(0,0,0,0.8)">Tap to unmute</p>' +
+        '<p class="text-xs font-bold" style="color:#1a2600;background:rgba(212,172,13,0.9);padding:2px 10px;border-radius:20px">Watch Now</p>' +
       '</div>' +
     '</div>' +
-    '<p class="text-xs mt-2 text-center px-1 leading-snug" style="color:rgba(255,255,255,0.5);display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">' + v.title + '</p>' +
+    '<p class="text-xs mt-2 text-center px-1 leading-snug font-medium" style="color:#2d4a06;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">' + v.title + '</p>' +
   '</div>';
 }).join('');
 
@@ -637,12 +667,12 @@ function renderHome(el) {
   </section>
 
   <!-- ══ SECTION 10: YouTube Reels ══ -->
-  <section class="py-16" style="background:linear-gradient(135deg,#1a2e05 0%,#2d4a06 50%,#1a2e05 100%)">
+  <section class="py-16 sm:py-20" style="background:#f7faf0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 mb-10">
       <div class="text-center">
-        <p class="text-gold text-xs font-bold uppercase tracking-widest mb-2">Watch &amp; Learn</p>
-        <h2 class="text-3xl font-extrabold text-white">Ayurvedic Wellness Reels</h2>
-        <p class="mt-2 text-sm" style="color:rgba(255,255,255,0.45)">Tap any reel to unmute &amp; watch</p>
+        <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Watch &amp; Learn</p>
+        <h2 class="text-3xl font-extrabold text-earth">Ayurvedic Wellness Reels</h2>
+        <p class="mt-2 text-sm text-herb/70">Click any reel to watch with sound</p>
       </div>
     </div>
     <div class="reels-viewport overflow-hidden">
