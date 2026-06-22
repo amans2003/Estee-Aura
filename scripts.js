@@ -785,7 +785,7 @@ function renderProduct(el, params) {
     el.innerHTML = `<div class="text-center py-24">
       <p class="text-5xl mb-4" aria-hidden="true">🌿</p>
       <p class="text-stone-400 text-lg mb-4">Product not found.</p>
-      <a href="#products" class="text-herb font-semibold hover:underline">← Back to Products</a>
+      <button onclick="navigate('products')" class="text-herb font-semibold hover:underline">← Back to Products</button>
     </div>`;
     return;
   }
@@ -798,11 +798,11 @@ function renderProduct(el, params) {
 
   el.innerHTML = `
   <nav class="flex items-center gap-2 text-xs text-stone-400 mb-6 flex-wrap" aria-label="Breadcrumb">
-    <a href="#home" class="hover:text-herb transition-colors">Home</a>
+    <button onclick="navigate('home')" class="hover:text-herb transition-colors">Home</button>
     <span aria-hidden="true">›</span>
-    <a href="#products" class="hover:text-herb transition-colors">Products</a>
+    <button onclick="navigate('products')" class="hover:text-herb transition-colors">Products</button>
     <span aria-hidden="true">›</span>
-    <a href="#products?category=${encodeURIComponent(p.category)}" class="hover:text-herb transition-colors">${p.category}</a>
+    <button onclick="navigate('products',{category:'${p.category}'})" class="hover:text-herb transition-colors">${p.category}</button>
     <span aria-hidden="true">›</span>
     <span class="text-earth font-medium">${p.name}</span>
   </nav>
@@ -895,7 +895,7 @@ function renderProduct(el, params) {
   <section class="fade-up mb-12" aria-labelledby="related-h">
     <div class="flex items-center justify-between mb-6">
       <h2 id="related-h" class="font-serif text-2xl font-bold text-earth">You May Also Like</h2>
-      <a href="#products" class="text-sm text-herb font-semibold hover:underline">View All →</a>
+      <button onclick="navigate('products')" class="text-sm text-herb font-semibold hover:underline">View All →</button>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
       ${related.map(productCard).join('')}
@@ -1218,10 +1218,14 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('popstate', route);
 
   document.addEventListener('click', e => {
-    const a = e.target.closest('a[data-nav]');
+    const a = e.target.closest('a[data-nav], a[href^="#"]');
     if (!a) return;
-    const pg = a.dataset.nav;
-    if (pg && RENDERERS[pg]) { e.preventDefault(); navigate(pg); }
+    const pg = a.dataset.nav || a.getAttribute('href').replace(/^#/, '').split('?')[0];
+    if (pg && RENDERERS[pg]) {
+      e.preventDefault();
+      const qs = (a.getAttribute('href') || '').split('?')[1] || '';
+      navigate(pg, Object.fromEntries(new URLSearchParams(qs)));
+    }
   });
 
   route();
