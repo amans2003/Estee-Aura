@@ -295,16 +295,16 @@ function renderHome(el) {
         <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Browse by Category</p>
         <h2 class="text-3xl font-extrabold text-earth">Shop Our Collections</h2>
       </div>
-      <div class="grid grid-cols-3 sm:grid-cols-6 gap-6 sm:gap-8">
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 sm:gap-6">
         ${CATS.map(c => `
         <button onclick="navigate('products')"
                 class="group flex flex-col items-center gap-3">
-          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-md group-hover:shadow-xl group-hover:scale-105 transition-all duration-300 flex-shrink-0">
+          <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:scale-105 transition-all duration-300 flex-shrink-0">
             <img src="${c.img}" alt="${c.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
           </div>
           <div class="text-center">
-            <p class="font-bold text-earth text-xs sm:text-sm leading-tight">${c.name}</p>
-            <p class="text-herb text-[10px] sm:text-xs mt-0.5">${c.count} Products</p>
+            <p class="font-bold text-earth text-sm sm:text-base leading-tight">${c.name}</p>
+            <p class="text-herb text-xs sm:text-sm mt-1">${c.count} Products</p>
           </div>
         </button>`).join('')}
       </div>
@@ -432,7 +432,7 @@ function renderHome(el) {
         <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Quality Assurance</p>
         <h2 class="text-2xl font-extrabold text-earth">Trusted & Certified</h2>
       </div>
-      <div class="flex flex-wrap justify-center gap-3 fade-up">
+      <div class="flex flex-wrap justify-center gap-5 fade-up">
         ${[
           { icon:'🌾', name:'USDA Organic' },
           { icon:'🏭', name:'GMP Certified' },
@@ -440,9 +440,9 @@ function renderHome(el) {
           { icon:'🔬', name:'Dermatologically Tested' },
           { icon:'🌱', name:'100% Natural' },
         ].map(c => `
-        <div class="flex flex-col items-center gap-1.5 bg-cream rounded-xl px-4 py-3 border border-herb/15 hover:border-herb/40 transition-colors w-28">
-          <span class="text-2xl">${c.icon}</span>
-          <p class="text-earth font-semibold text-[11px] text-center leading-tight">${c.name}</p>
+        <div class="flex flex-col items-center gap-3 bg-cream rounded-2xl px-8 py-6 border border-herb/15 hover:border-herb/50 hover:shadow-md transition-all w-40 sm:w-44">
+          <span class="text-5xl">${c.icon}</span>
+          <p class="text-earth font-bold text-sm text-center leading-snug">${c.name}</p>
         </div>`).join('')}
       </div>
     </div>
