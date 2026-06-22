@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Estée Aura — Authentic Ayurvedic wellness products crafted from certified organic herbs. Shop ashwagandha, triphala, kumkumadi oil & more.">
+  <meta name="description" content="Estée Aura — Authentic Ayurvedic skincare crafted from certified organic herbs. Shop face creams, masks, serums & more.">
   <title>Estée Aura — Ancient Wisdom, Modern Wellness</title>
 
   <!-- Tailwind CDN -->
@@ -20,8 +20,8 @@
             earth:  '#1a2600',
           },
           fontFamily: {
+            sans:  ['Jost', 'Inter', 'system-ui', 'sans-serif'],
             serif: ['"Playfair Display"', 'Georgia', 'serif'],
-            sans:  ['Inter', 'system-ui', 'sans-serif'],
           },
         },
       },
@@ -31,26 +31,21 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
-    /* ── Base ──────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { background-color: #f7faf0; font-family: 'Inter', system-ui, sans-serif; color: #1a2600; }
+    body { background: #fff; font-family: 'Jost', system-ui, sans-serif; color: #1a2600; }
 
-    /* ── Entrance animations ───────────────────────── */
     .fade-up {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .fade-up.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-up.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* ── Nav active state — desktop ───────────────── */
+    /* Desktop nav active */
     .nav-active:not(.drawer-link) {
       color: #4d7c0f !important;
       font-weight: 700;
@@ -59,142 +54,77 @@
     .nav-active:not(.drawer-link)::after {
       content: '';
       position: absolute;
-      bottom: -4px;
-      left: 0;
-      right: 0;
+      bottom: -4px; left: 0; right: 0;
       height: 2.5px;
       background: #4d7c0f;
       border-radius: 99px;
     }
 
-    /* ── Nav active state — mobile drawer ─────────── */
-    .drawer-link.nav-active {
-      background-color: #4d7c0f !important;
-      color: #fff !important;
-    }
-    .drawer-link.nav-active > span:first-child {
-      background-color: rgba(255,255,255,0.22) !important;
-      color: #fff !important;
-    }
-    .drawer-link.nav-active > span:last-child {
-      color: #fff !important;
-    }
+    /* Drawer nav active */
+    .drawer-link.nav-active { background-color: #4d7c0f !important; color: #fff !important; }
+    .drawer-link.nav-active > span:first-child { background-color: rgba(255,255,255,0.22) !important; color: #fff !important; }
+    .drawer-link.nav-active > span:last-child { color: #fff !important; }
 
-    /* ── Custom scrollbar ──────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #2D6A4F55; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #4d7c0f55; border-radius: 4px; }
 
-    /* ── Line clamp fallback ───────────────────────── */
-    .line-clamp-2 {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* ── Gallery main image transition ────────────── */
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     #gal-main { transition: opacity 0.2s ease; }
-
-    /* ── Details summary marker remove ────────────── */
     details > summary { list-style: none; }
     details > summary::-webkit-details-marker { display: none; }
-
-    /* ── Sidebar smooth transition ─────────────────── */
-    #sidebar-mobile { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    /* ── Social rail tooltip ───────────────────────── */
-    .social-btn { position: relative; }
-    .social-btn .tooltip {
-      position: absolute;
-      left: calc(100% + 10px);
-      top: 50%;
-      transform: translateY(-50%);
-      background: #1c1410;
-      color: white;
-      font-size: 11px;
-      font-weight: 600;
-      white-space: nowrap;
-      padding: 3px 8px;
-      border-radius: 6px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .social-btn:hover .tooltip,
-    .social-btn:focus .tooltip { opacity: 1; }
-
-    /* ── Toast ─────────────────────────────────────── */
     #toast { transition: transform 0.3s ease, opacity 0.3s ease; }
   </style>
 </head>
 
 <body class="antialiased">
 
-  <!-- ══════════════════════════════════════════════════
-       LEFT SOCIAL RAIL — desktop only, fixed
-  ═══════════════════════════════════════════════════ -->
-  <aside aria-label="Social media links"
-         class="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-1
-                bg-forest/95 backdrop-blur-sm px-2 py-3 rounded-r-2xl shadow-xl">
+  <!-- ═══════════════════════════════════════════════
+       TOP BAR
+  ══════════════════════════════════════════════════ -->
+  <div class="bg-earth text-white text-xs py-2 hidden sm:block">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-4 text-white/70">
+        <span class="flex items-center gap-1">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+919999999999" class="hover:text-white transition-colors">+91 99999 99999</a>
+        </span>
+        <span class="flex items-center gap-1">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:hello@esteeaura.com" class="hover:text-white transition-colors">hello@esteeaura.com</a>
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+           class="w-6 h-6 flex items-center justify-center rounded bg-white/10 hover:bg-white/20 transition-colors">
+          <svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+           class="w-6 h-6 flex items-center justify-center rounded bg-white/10 hover:bg-white/20 transition-colors">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="white" stroke="none"/></svg>
+        </a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"
+           class="w-6 h-6 flex items-center justify-center rounded bg-white/10 hover:bg-white/20 transition-colors">
+          <svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1a2600"/></svg>
+        </a>
+        <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+           class="w-6 h-6 flex items-center justify-center rounded bg-green-600/70 hover:bg-green-600 transition-colors">
+          <svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
 
-    <!-- Facebook -->
-    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-       class="social-btn flex items-center justify-center w-9 h-9 rounded-xl text-white hover:bg-white/20 transition-colors"
-       aria-label="Follow us on Facebook">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-      </svg>
-      <span class="tooltip">Facebook</span>
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-       class="social-btn flex items-center justify-center w-9 h-9 rounded-xl text-white hover:bg-white/20 transition-colors"
-       aria-label="Follow us on Instagram">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="5"/>
-        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
-      </svg>
-      <span class="tooltip">Instagram</span>
-    </a>
-
-    <!-- YouTube -->
-    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
-       class="social-btn flex items-center justify-center w-9 h-9 rounded-xl text-white hover:bg-white/20 transition-colors"
-       aria-label="Subscribe on YouTube">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-        <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1B4332"/>
-      </svg>
-      <span class="tooltip">YouTube</span>
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer"
-       class="social-btn flex items-center justify-center w-9 h-9 rounded-xl text-white hover:bg-white/20 transition-colors"
-       aria-label="Chat on WhatsApp">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/>
-      </svg>
-      <span class="tooltip">WhatsApp</span>
-    </a>
-  </aside>
-
-  <!-- ══════════════════════════════════════════════════
-       STICKY NAVBAR
-  ═══════════════════════════════════════════════════ -->
-  <!-- ── Right-side mobile drawer overlay ── -->
+  <!-- ═══════════════════════════════════════════════
+       MOBILE DRAWER OVERLAY + DRAWER
+  ══════════════════════════════════════════════════ -->
   <div id="drawer-overlay"
        class="fixed inset-0 bg-black/50 z-40 hidden opacity-0 transition-opacity duration-300 lg:hidden"></div>
 
-  <!-- ── Right-side mobile drawer ── -->
   <nav id="mobile-drawer"
        class="fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-2xl translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col"
        aria-label="Mobile navigation">
 
-    <!-- Drawer header -->
     <div class="flex items-center justify-between px-5 py-4 border-b border-stone-100">
       <img src="Estee Aura.jpg" alt="Estée Aura" class="h-10 w-auto object-contain" style="mix-blend-mode:multiply">
       <button id="drawer-close"
@@ -206,9 +136,7 @@
       </button>
     </div>
 
-    <!-- Nav items with icons -->
     <div class="flex-1 px-4 py-5 flex flex-col gap-1 overflow-y-auto">
-
       <a href="/" data-nav="home"
          class="drawer-link group flex items-center gap-3 px-3 py-3 rounded-xl text-stone-700 hover:bg-herb/10 hover:text-herb transition-colors">
         <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-herb/10 text-herb group-hover:bg-herb group-hover:text-white transition-colors flex-shrink-0">
@@ -255,15 +183,12 @@
          target="_blank" rel="noopener noreferrer"
          class="drawer-link group flex items-center gap-3 px-3 py-3 rounded-xl bg-green-50 text-green-700 hover:bg-green-500 hover:text-white transition-colors">
         <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-green-100 text-green-600 group-hover:bg-white/20 group-hover:text-white transition-colors flex-shrink-0">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/>
-          </svg>
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/></svg>
         </span>
         <span class="font-semibold text-sm">Chat on WhatsApp</span>
       </a>
     </div>
 
-    <!-- Drawer footer: social links -->
     <div class="px-5 py-4 border-t border-stone-100">
       <p class="text-[10px] uppercase tracking-widest text-stone-400 font-semibold mb-3">Follow Us</p>
       <div class="flex items-center gap-3">
@@ -283,37 +208,38 @@
     </div>
   </nav>
 
-  <!-- ── STICKY NAVBAR ── -->
-  <header class="sticky top-0 z-30 bg-cream/95 backdrop-blur-sm border-b border-amber-100/60 shadow-sm">
-    <div class="px-3 sm:px-6 lg:px-8 lg:pl-20 py-2 sm:py-2.5 flex items-center gap-2">
+  <!-- ═══════════════════════════════════════════════
+       STICKY NAVBAR
+  ══════════════════════════════════════════════════ -->
+  <header class="sticky top-0 z-30 bg-white border-b border-stone-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-0 flex items-center h-16 sm:h-18 lg:h-20 gap-4">
 
       <!-- Logo -->
-      <a href="/" class="flex items-center flex-shrink-0 ml-2 sm:ml-4 lg:ml-8" aria-label="Estée Aura — Home">
+      <a href="/" class="flex items-center flex-shrink-0" aria-label="Estée Aura — Home">
         <img src="Estee Aura.jpg" alt="Estée Aura logo"
              class="h-12 sm:h-14 lg:h-16 w-auto object-contain"
              style="mix-blend-mode:multiply">
       </a>
 
-      <!-- Desktop nav links -->
-      <nav class="hidden lg:flex items-center gap-7 ml-auto mr-4" aria-label="Main navigation">
-        <a href="/"         data-nav="home"     class="relative text-sm font-medium text-stone-600 hover:text-herb transition-colors pb-1">Home</a>
-        <a href="/about"    data-nav="about"    class="relative text-sm font-medium text-stone-600 hover:text-herb transition-colors pb-1">About Us</a>
-        <a href="/products" data-nav="products" class="relative text-sm font-medium text-stone-600 hover:text-herb transition-colors pb-1">Products</a>
-        <a href="/contact"  data-nav="contact"  class="relative text-sm font-medium text-stone-600 hover:text-herb transition-colors pb-1">Contact Us</a>
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-8 ml-auto" aria-label="Main navigation">
+        <a href="/"         data-nav="home"     class="relative text-sm font-semibold text-stone-600 hover:text-herb transition-colors pb-1">Home</a>
+        <a href="/about"    data-nav="about"    class="relative text-sm font-semibold text-stone-600 hover:text-herb transition-colors pb-1">About Us</a>
+        <a href="/products" data-nav="products" class="relative text-sm font-semibold text-stone-600 hover:text-herb transition-colors pb-1">Products</a>
+        <a href="/contact"  data-nav="contact"  class="relative text-sm font-semibold text-stone-600 hover:text-herb transition-colors pb-1">Contact Us</a>
         <a href="https://wa.me/919999999999?text=Hi%20Est%C3%A9e%20Aura!%20I%20have%20a%20query."
-           target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"
-           class="flex items-center justify-center w-9 h-9 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors shadow-sm">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/>
-          </svg>
+           target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-2 bg-herb text-white text-sm font-semibold px-5 py-2 rounded-full hover:bg-forest transition-colors shadow-sm">
+          <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/></svg>
+          WhatsApp
         </a>
       </nav>
 
-      <!-- Mobile: hamburger (right-aligned) -->
+      <!-- Mobile hamburger -->
       <button id="mobile-menu-btn"
               class="ml-auto lg:hidden p-2 text-stone-600 hover:text-herb hover:bg-stone-100 rounded-lg transition-colors"
               aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
           <line x1="3" y1="18" x2="21" y2="18"/>
@@ -322,119 +248,142 @@
     </div>
   </header>
 
-  <!-- Full-width hero slot — outside lg:pl-14 so it spans the full viewport -->
+  <!-- ═══════════════════════════════════════════════
+       HERO SLOT (full-width, outside main)
+  ══════════════════════════════════════════════════ -->
   <div id="hero-slot"></div>
 
-  <!-- ══════════════════════════════════════════════════
-       MAIN CONTENT (centered, full width)
-  ═══════════════════════════════════════════════════ -->
-  <div class="lg:pl-14 min-h-screen">
-    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-8">
-      <div data-page="home"></div>
-      <div data-page="about"    style="display:none"></div>
-      <div data-page="products" style="display:none"></div>
-      <div data-page="product"  style="display:none"></div>
-      <div data-page="contact"  style="display:none"></div>
-    </main>
-  </div>
+  <!-- ═══════════════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════════════════ -->
+  <main id="main-content">
+    <div data-page="home"></div>
+    <div data-page="about"    style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10"></div>
+    <div data-page="products" style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10"></div>
+    <div data-page="product"  style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10"></div>
+    <div data-page="contact"  style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10"></div>
+  </main>
 
-  <!-- ══════════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════
        FOOTER
-  ═══════════════════════════════════════════════════ -->
-  <footer class="lg:pl-14 bg-forest text-white mt-8" role="contentinfo">
-    <div class="px-6 lg:px-10 py-12">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+  ══════════════════════════════════════════════════ -->
+  <footer class="bg-earth text-white" role="contentinfo">
 
-        <!-- Brand column -->
-        <div class="sm:col-span-2 lg:col-span-1">
-          <div class="inline-block bg-white rounded-2xl px-4 py-2 mb-3">
-            <img src="Estee Aura.jpg" alt="Estée Aura" class="h-14 w-auto object-contain">
+    <!-- Newsletter bar -->
+    <div class="border-b border-white/10 py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-white mb-1">Subscribe to Our Newsletter</h3>
+            <p class="text-white/55 text-sm">Get Ayurvedic tips, new arrivals & exclusive offers straight to your inbox.</p>
           </div>
-          <p class="text-white/65 text-sm leading-relaxed mb-4">
-            Authentic Ayurvedic wellness, crafted from certified organic herbs. Ancient wisdom delivered to your door.
+          <form class="flex gap-2 w-full md:w-auto" onsubmit="event.preventDefault();this.querySelector('input').value='';window.showToast('Subscribed! Thank you.')">
+            <input type="email" placeholder="Enter your email address"
+                   class="flex-1 md:w-64 px-4 py-2.5 rounded-full text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-gold focus:bg-white/15 transition-colors">
+            <button type="submit"
+                    class="bg-herb text-white font-semibold px-6 py-2.5 rounded-full hover:bg-forest transition-colors text-sm flex-shrink-0">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer columns -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-14">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+        <!-- Brand -->
+        <div class="sm:col-span-2 lg:col-span-1">
+          <div class="inline-block bg-white rounded-2xl px-4 py-2 mb-4">
+            <img src="Estee Aura.jpg" alt="Estée Aura" class="h-12 w-auto object-contain">
+          </div>
+          <p class="text-white/55 text-sm leading-relaxed mb-5">
+            Authentic Ayurvedic skincare crafted from certified organic herbs. Ancient wisdom delivered to your door.
           </p>
           <div class="flex gap-2">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-               class="flex items-center justify-center w-8 h-8 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-              </svg>
+               class="w-9 h-9 flex items-center justify-center bg-white/10 rounded-lg hover:bg-herb transition-colors">
+              <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-               class="flex items-center justify-center w-8 h-8 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="5"/>
-                <circle cx="12" cy="12" r="5"/>
-                <circle cx="17.5" cy="6.5" r="1.5" fill="white" stroke="none"/>
-              </svg>
+               class="w-9 h-9 flex items-center justify-center bg-white/10 rounded-lg hover:bg-herb transition-colors">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="white" stroke="none"/></svg>
             </a>
             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"
-               class="flex items-center justify-center w-8 h-8 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1B4332"/>
-              </svg>
+               class="w-9 h-9 flex items-center justify-center bg-white/10 rounded-lg hover:bg-red-600 transition-colors">
+              <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1a2600"/></svg>
             </a>
             <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-               class="flex items-center justify-center w-8 h-8 bg-green-500/80 rounded-lg hover:bg-green-500 transition-colors">
-              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/>
-              </svg>
+               class="w-9 h-9 flex items-center justify-center bg-green-600/60 rounded-lg hover:bg-green-500 transition-colors">
+              <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/></svg>
             </a>
           </div>
         </div>
 
         <!-- Quick Links -->
         <div>
-          <h4 class="font-semibold text-sm uppercase tracking-widest text-white/50 mb-4">Quick Links</h4>
-          <ul class="space-y-2">
-            <li><a href="/"         class="text-white/70 text-sm hover:text-white transition-colors">Home</a></li>
-            <li><a href="/about"    class="text-white/70 text-sm hover:text-white transition-colors">About Us</a></li>
-            <li><a href="/products" class="text-white/70 text-sm hover:text-white transition-colors">All Products</a></li>
-            <li><a href="/contact"  class="text-white/70 text-sm hover:text-white transition-colors">Contact Us</a></li>
+          <h4 class="font-bold text-sm uppercase tracking-widest text-white/40 mb-5">Quick Links</h4>
+          <ul class="space-y-3">
+            <li><a href="/"         class="text-white/65 text-sm hover:text-white transition-colors hover:pl-1 transition-all">Home</a></li>
+            <li><a href="/about"    class="text-white/65 text-sm hover:text-white transition-colors hover:pl-1 transition-all">About Us</a></li>
+            <li><a href="/products" class="text-white/65 text-sm hover:text-white transition-colors hover:pl-1 transition-all">All Products</a></li>
+            <li><a href="/contact"  class="text-white/65 text-sm hover:text-white transition-colors hover:pl-1 transition-all">Contact Us</a></li>
           </ul>
         </div>
 
         <!-- Categories -->
         <div>
-          <h4 class="font-semibold text-sm uppercase tracking-widest text-white/50 mb-4">Categories</h4>
-          <ul class="space-y-2">
-            <li><button onclick="navigate('products')"                          class="text-white/70 text-sm hover:text-white transition-colors text-left">All Products</button></li>
-            <li><button onclick="navigate('products',{category:'Skincare'})"    class="text-white/70 text-sm hover:text-white transition-colors text-left">Skincare</button></li>
+          <h4 class="font-bold text-sm uppercase tracking-widest text-white/40 mb-5">Categories</h4>
+          <ul class="space-y-3">
+            <li><button onclick="navigate('products')"                          class="text-white/65 text-sm hover:text-white transition-colors text-left hover:pl-1 transition-all">All Products</button></li>
+            <li><button onclick="navigate('products',{category:'Skincare'})"    class="text-white/65 text-sm hover:text-white transition-colors text-left hover:pl-1 transition-all">Skincare</button></li>
+            <li><button onclick="navigate('products')"                          class="text-white/65 text-sm hover:text-white transition-colors text-left hover:pl-1 transition-all">Face Creams</button></li>
+            <li><button onclick="navigate('products')"                          class="text-white/65 text-sm hover:text-white transition-colors text-left hover:pl-1 transition-all">Face Masks</button></li>
+            <li><button onclick="navigate('products')"                          class="text-white/65 text-sm hover:text-white transition-colors text-left hover:pl-1 transition-all">Serums & Oils</button></li>
           </ul>
         </div>
 
         <!-- Contact -->
         <div>
-          <h4 class="font-semibold text-sm uppercase tracking-widest text-white/50 mb-4">Get in Touch</h4>
-          <ul class="space-y-3 text-sm text-white/70">
-            <li class="flex gap-2"><span aria-hidden="true">📍</span> 42 Wellness Tower, Connaught Place, New Delhi 110001</li>
-            <li class="flex gap-2"><span aria-hidden="true">📞</span> <a href="tel:+919999999999" class="hover:text-white transition-colors">+91 99999 99999</a></li>
-            <li class="flex gap-2"><span aria-hidden="true">✉️</span> <a href="mailto:hello@esteeaura.com" class="hover:text-white transition-colors">hello@esteeaura.com</a></li>
+          <h4 class="font-bold text-sm uppercase tracking-widest text-white/40 mb-5">Contact Info</h4>
+          <ul class="space-y-4 text-sm text-white/65">
+            <li class="flex gap-3 items-start">
+              <svg class="flex-shrink-0 mt-0.5 text-herb" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              42 Wellness Tower, Connaught Place, New Delhi 110001
+            </li>
+            <li class="flex gap-3 items-center">
+              <svg class="flex-shrink-0 text-herb" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:+919999999999" class="hover:text-white transition-colors">+91 99999 99999</a>
+            </li>
+            <li class="flex gap-3 items-center">
+              <svg class="flex-shrink-0 text-herb" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:hello@esteeaura.com" class="hover:text-white transition-colors">hello@esteeaura.com</a>
+            </li>
           </ul>
         </div>
       </div>
 
-      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+      <!-- Bottom bar -->
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/35">
         <p>© 2025 Estée Aura. All rights reserved.</p>
-        <div class="flex gap-4">
-          <a href="#" class="hover:text-white/70 transition-colors">Privacy Policy</a>
-          <a href="#" class="hover:text-white/70 transition-colors">Terms of Service</a>
-          <a href="#" class="hover:text-white/70 transition-colors">Shipping Policy</a>
+        <div class="flex gap-5">
+          <a href="#" class="hover:text-white/60 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-white/60 transition-colors">Terms of Service</a>
+          <a href="#" class="hover:text-white/60 transition-colors">Shipping Policy</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- ══════════════════════════════════════════════════
-       TOAST NOTIFICATION
-  ═══════════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════════
+       TOAST
+  ══════════════════════════════════════════════════ -->
   <div id="toast"
-       class="fixed bottom-6 right-6 z-50 bg-forest text-white text-sm font-medium
+       class="fixed bottom-6 right-6 z-50 bg-earth text-white text-sm font-medium
               px-5 py-3 rounded-full shadow-xl transform translate-y-20 opacity-0"
        aria-live="polite" aria-atomic="true"></div>
 
-  <!-- ── Scripts ──────────────────────────────── -->
   <script src="products.js"></script>
   <script src="scripts.js"></script>
 </body>

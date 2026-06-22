@@ -166,172 +166,456 @@ function initHeroSlider() {
   _heroTimer = setInterval(() => goTo(cur + 1), 3000);
 }
 
+// ─── Countdown timer ──────────────────────────────────────────────────────────
+function initCountdown() {
+  const target = new Date();
+  target.setDate(target.getDate() + 3);
+  target.setHours(23, 59, 59, 0);
+
+  function tick() {
+    const diff = target - new Date();
+    if (diff <= 0) return;
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+    const vals  = [days, hours, mins, secs];
+    document.querySelectorAll('.countdown-val').forEach(el => {
+      const u = +el.dataset.unit;
+      if (u < vals.length) el.textContent = String(vals[u]).padStart(2, '0');
+    });
+  }
+  tick();
+  if (window._countdownTimer) clearInterval(window._countdownTimer);
+  window._countdownTimer = setInterval(tick, 1000);
+}
+
 // ─── Page: Home ───────────────────────────────────────────────────────────────
 function renderHome(el) {
-  const featured = PRODUCTS.filter(p => p.badge).slice(0, 4);
-
   const heroImgs = [
     'https://images.pexels.com/photos/4589169/pexels-photo-4589169.jpeg?auto=compress&cs=tinysrgb&w=1400',
     'https://images.pexels.com/photos/7829483/pexels-photo-7829483.jpeg?auto=compress&cs=tinysrgb&w=1400',
     'https://images.pexels.com/photos/4871315/pexels-photo-4871315.jpeg?auto=compress&cs=tinysrgb&w=1400',
   ];
 
-  // Render hero into its own full-width slot (outside <main>'s padding)
+  // ── Hero ──
   const heroSlot = document.getElementById('hero-slot');
   if (heroSlot) {
     heroSlot.innerHTML = `
-  <section class="relative w-full overflow-hidden"
-           style="height:calc(100vh - 72px);min-height:560px;max-height:900px"
-           aria-label="Hero slideshow">
-
-    ${heroImgs.map((src, i) => `
-    <div class="hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat"
-         style="background-image:url('${src}');opacity:${i === 0 ? 1 : 0};transition:opacity 1.2s ease-in-out"
-         role="img" aria-hidden="${i !== 0}"></div>`).join('')}
-
-    <div class="absolute inset-0 bg-black/50"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/40"></div>
-
-    <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-5 sm:px-10">
-      <p class="text-gold text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] mb-3 sm:mb-4">
-        Since 2018 &nbsp;·&nbsp; Certified Organic
-      </p>
-      <h1 class="font-serif font-bold text-white leading-tight mb-4 sm:mb-5"
-          style="font-size:clamp(2rem,6vw,4.5rem)">
-        Ancient Wisdom,<br>
-        <em class="not-italic" style="color:#D4AC0D">Modern Wellness</em>
-      </h1>
-      <p class="text-white/80 leading-relaxed mb-7 sm:mb-9"
-         style="font-size:clamp(0.85rem,2vw,1.1rem);max-width:520px">
-        Discover the healing power of authentic Ayurveda — crafted from the finest organic herbs, following formulations passed down through generations.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0">
-        <a href="#products"
-           class="bg-herb text-white font-bold px-8 py-3.5 rounded-full hover:bg-forest transition-colors shadow-lg text-sm sm:text-base text-center">
-          Shop Now
-        </a>
-        <a href="#about"
-           class="border-2 border-white/60 text-white font-semibold px-8 py-3.5 rounded-full hover:bg-white/15 transition-colors text-sm sm:text-base text-center">
-          Our Story
-        </a>
-      </div>
+<section class="relative w-full overflow-hidden"
+         style="height:calc(100vh - 108px);min-height:520px;max-height:860px"
+         aria-label="Hero slideshow">
+  ${heroImgs.map((src, i) => `
+  <div class="hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat"
+       style="background-image:url('${src}');opacity:${i===0?1:0};transition:opacity 1.2s ease-in-out"
+       role="img" aria-hidden="${i!==0}"></div>`).join('')}
+  <div class="absolute inset-0 bg-black/55"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/45"></div>
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-5 sm:px-10">
+    <p class="text-gold text-[11px] sm:text-xs font-bold uppercase tracking-[0.28em] mb-3 sm:mb-4">
+      Since 2018 &nbsp;·&nbsp; Certified Organic
+    </p>
+    <h1 class="font-sans font-extrabold text-white leading-tight mb-4 sm:mb-5"
+        style="font-size:clamp(2rem,6vw,4.5rem)">
+      Ancient Wisdom,<br>
+      <span style="color:#D4AC0D">Modern Wellness</span>
+    </h1>
+    <p class="text-white/80 leading-relaxed mb-7 sm:mb-9"
+       style="font-size:clamp(0.9rem,2vw,1.1rem);max-width:540px">
+      Discover the healing power of authentic Ayurveda — crafted from the finest organic herbs, following formulations passed down through generations.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0">
+      <button onclick="navigate('products')"
+              class="bg-herb text-white font-bold px-9 py-3.5 rounded-full hover:bg-forest transition-colors shadow-lg text-sm sm:text-base">
+        Shop Now
+      </button>
+      <button onclick="navigate('about')"
+              class="border-2 border-white/60 text-white font-semibold px-9 py-3.5 rounded-full hover:bg-white/15 transition-colors text-sm sm:text-base">
+        Our Story
+      </button>
     </div>
-
-    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2">
-      ${heroImgs.map((_, i) => `
-      <div class="hero-dot rounded-full bg-white"
-           style="height:6px;width:${i === 0 ? '28px' : '8px'};opacity:${i === 0 ? 1 : 0.35};transition:all 0.45s ease"></div>`).join('')}
-    </div>
-  </section>`;
+  </div>
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
+    ${heroImgs.map((_, i) => `
+    <div class="hero-dot rounded-full bg-white"
+         style="height:5px;width:${i===0?'28px':'8px'};opacity:${i===0?1:0.35};transition:all 0.45s ease"></div>`).join('')}
+  </div>
+</section>`;
   }
 
+  // ── Category data ──
+  const CATS = [
+    { name: 'Face Creams', count: 3, img: 'Product-4.jpeg' },
+    { name: 'Face Masks',  count: 2, img: 'Product-2.jpeg' },
+    { name: 'Serums',      count: 4, img: 'Product-3.jpeg' },
+    { name: 'Cleansers',   count: 3, img: 'Product-3.jpeg' },
+    { name: 'Face Oils',   count: 5, img: 'https://images.pexels.com/photos/4589169/pexels-photo-4589169.jpeg?auto=compress&cs=tinysrgb&w=300' },
+    { name: 'Gift Kits',   count: 2, img: 'https://images.pexels.com/photos/4871315/pexels-photo-4871315.jpeg?auto=compress&cs=tinysrgb&w=300' },
+  ];
+
+  // ── Features data ──
+  const FEATS = [
+    { icon: '🌿', t: 'Direct From Source',    d: 'Herbs sourced directly from certified organic farms across India.' },
+    { icon: '📜', t: 'Ayurvedic Formula',      d: 'Formulations rooted in ancient texts, perfected over centuries.' },
+    { icon: '🔬', t: 'Lab Tested',             d: 'Every batch independently verified for purity, potency, and safety.' },
+    { icon: '🌱', t: 'Natural Ingredients',    d: 'No harsh chemicals, parabens, sulfates, or synthetic additives.' },
+    { icon: '🕊️', t: 'Cruelty Free',           d: 'Never tested on animals. Our ethics match our ingredients.' },
+  ];
+
+  // ── Testimonials data ──
+  const TESTI = [
+    { name: 'Priya Sharma',  loc: 'Mumbai',    text: 'The Kumkumadi Face Mask has transformed my skin completely! Natural, effective, and smells divine. Nothing compares to Estée Aura.' },
+    { name: 'Arjun Mehta',   loc: 'Delhi',     text: 'My wife loves the Lumi Correct Cream. Three weeks in and her skin is visibly brighter. We are now loyal customers for life!' },
+    { name: 'Neha Reddy',    loc: 'Bengaluru', text: 'Finally found skincare without harsh chemicals. The True-Glow Serum is incredible. My skin has never looked this good at 35.' },
+  ];
+
+  // ── Blog posts data ──
+  const BLOGS = [
+    { img: 'https://images.pexels.com/photos/4589169/pexels-photo-4589169.jpeg?auto=compress&cs=tinysrgb&w=600', cat: 'Skincare',  date: 'June 15, 2025', title: 'The Ancient Secret of Kumkumadi — Benefits for Modern Skin', excerpt: 'Kumkumadi is one of the most prized Ayurvedic formulations. Discover how this centuries-old recipe can transform your complexion.' },
+    { img: 'https://images.pexels.com/photos/7829483/pexels-photo-7829483.jpeg?auto=compress&cs=tinysrgb&w=600', cat: 'Wellness', date: 'June 8, 2025',  title: 'Build Your Ayurvedic Skincare Routine in 5 Simple Steps',          excerpt: 'A holistic routine based on your Ayurvedic dosha type. Learn how to choose products that truly complement your skin\'s nature.' },
+    { img: 'https://images.pexels.com/photos/4871315/pexels-photo-4871315.jpeg?auto=compress&cs=tinysrgb&w=600', cat: 'Education', date: 'May 28, 2025', title: 'Why Natural Ingredients Always Beat Chemical Formulas',             excerpt: 'Modern research is finally catching up with what Ayurveda has known for 5000 years. Here\'s the science behind natural skincare.' },
+  ];
+
+  // ── Instagram images ──
+  const IG = [
+    'https://images.pexels.com/photos/4589169/pexels-photo-4589169.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/7829483/pexels-photo-7829483.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'https://images.pexels.com/photos/4871315/pexels-photo-4871315.jpeg?auto=compress&cs=tinysrgb&w=400',
+    'Product-4.jpeg',
+    'Product-2.jpeg',
+    'Product-3.jpeg',
+  ];
+
   el.innerHTML = `
-  <section class="fade-up grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 mt-10" aria-label="Trust badges">
-    ${[
-      { icon: '🌿', label: 'USDA Organic', sub: '100% Certified' },
-      { icon: '🔬', label: 'Lab Tested', sub: 'Every Batch' },
-      { icon: '🌱', label: 'Non-GMO', sub: 'Always Pure' },
-      { icon: '✈️', label: 'Free Shipping', sub: 'Orders ₹999+' },
-    ].map(t => `
-    <div class="flex flex-col items-center text-center bg-white rounded-2xl p-5 shadow-sm border border-stone-100 hover:shadow-md transition-shadow">
-      <span class="text-3xl mb-2" aria-hidden="true">${t.icon}</span>
-      <span class="font-semibold text-earth text-sm">${t.label}</span>
-      <span class="text-xs text-stone-400">${t.sub}</span>
-    </div>`).join('')}
-  </section>
 
-  <section class="fade-up mb-16" aria-labelledby="featured-h">
-    <div class="flex items-end justify-between mb-8">
-      <div>
-        <p class="text-herb text-sm font-semibold uppercase tracking-widest mb-1">Handpicked</p>
-        <h2 id="featured-h" class="font-serif text-3xl font-bold text-earth">Best Sellers</h2>
+  <!-- ══ SECTION 1: Category Browser ══ -->
+  <section class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="text-center mb-10">
+        <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Browse by Category</p>
+        <h2 class="text-3xl font-extrabold text-earth">Shop Our Collections</h2>
       </div>
-      <a href="#products" class="text-herb text-sm font-semibold hover:text-forest transition-colors">View All →</a>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      ${featured.map(productCard).join('')}
-    </div>
-  </section>
-
-  <section class="fade-up grid md:grid-cols-2 gap-12 items-center mb-16 bg-amber-50 rounded-3xl p-8 md:p-12 border border-amber-100" aria-labelledby="about-teaser-h">
-    <div>
-      <p class="text-herb text-sm font-semibold uppercase tracking-widest mb-2">Our Mission</p>
-      <h2 id="about-teaser-h" class="font-serif text-3xl font-bold text-earth mb-4">
-        Rooted in Tradition,<br>Driven by Science
-      </h2>
-      <p class="text-stone-600 leading-relaxed mb-4">
-        Estée Aura was founded with a single belief: that the world's oldest wellness system holds answers to modern health challenges. We bridge ancient texts and modern quality standards to bring you products that truly work.
-      </p>
-      <p class="text-stone-600 leading-relaxed mb-6">
-        Every herb is traced to its source. Every formulation is reviewed by certified Ayurvedic practitioners. Every batch is independently lab-tested.
-      </p>
-      <a href="#about" class="inline-flex items-center gap-2 text-herb font-semibold hover:text-forest transition-colors">
-        Read Our Story →
-      </a>
-    </div>
-    <div class="relative">
-      <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80"
-           alt="Ayurvedic herbs being prepared" class="rounded-2xl shadow-xl w-full h-72 object-cover">
-      <div class="absolute -bottom-4 -left-4 bg-forest text-white rounded-xl p-4 shadow-xl">
-        <p class="font-serif text-2xl font-bold">8+</p>
-        <p class="text-xs text-white/75">Years of Trust</p>
-      </div>
-      <div class="absolute -top-4 -right-4 bg-gold text-earth rounded-xl p-4 shadow-xl">
-        <p class="font-serif text-2xl font-bold">40K+</p>
-        <p class="text-xs font-semibold">Customers</p>
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4">
+        ${CATS.map(c => `
+        <button onclick="navigate('products')"
+                class="group flex flex-col items-center gap-3 p-3 sm:p-4 rounded-2xl bg-cream hover:bg-herb/10 border border-transparent hover:border-herb/20 transition-all duration-300">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden shadow-md group-hover:shadow-lg transition-shadow flex-shrink-0">
+            <img src="${c.img}" alt="${c.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          </div>
+          <div class="text-center">
+            <p class="font-bold text-earth text-xs sm:text-sm leading-tight">${c.name}</p>
+            <p class="text-herb text-[10px] sm:text-xs mt-0.5">${c.count} Products</p>
+          </div>
+        </button>`).join('')}
       </div>
     </div>
   </section>
 
-  <section class="fade-up mb-16" aria-labelledby="diff-h">
-    <div class="text-center mb-10">
-      <p class="text-herb text-sm font-semibold uppercase tracking-widest mb-1">Why Choose Us</p>
-      <h2 id="diff-h" class="font-serif text-3xl font-bold text-earth">The Estée Aura Difference</h2>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      ${[
-        { icon: '🌾', title: 'Source-Traced Herbs', desc: 'Every herb is traceable to its farm, region, and harvest batch. We visit our partner farms regularly and test soil quality.' },
-        { icon: '⚗️', title: 'Traditional Methods', desc: 'Cold-pressed oils, stone-ground powders, copper-vessel cooking — processes that unlock maximum potency.' },
-        { icon: '🛡️', title: 'Third-Party Testing', desc: 'Every product is independently tested for heavy metals, pesticides, microbials, and potency. COAs available on request.' },
-      ].map(b => `
-      <div class="bg-white rounded-2xl p-6 border border-stone-100 hover:shadow-lg transition-shadow">
-        <div class="text-4xl mb-4" aria-hidden="true">${b.icon}</div>
-        <h3 class="font-serif text-lg font-semibold text-earth mb-2">${b.title}</h3>
-        <p class="text-stone-500 text-sm leading-relaxed">${b.desc}</p>
-      </div>`).join('')}
+  <!-- ══ SECTION 2: Welcome / About ══ -->
+  <section class="py-16 sm:py-20" style="background:#f7faf0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div class="fade-up">
+          <p class="text-herb text-xs font-bold uppercase tracking-widest mb-3">Welcome to Estée Aura</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-earth leading-tight mb-5">
+            Authentic Ayurveda<br>for <span class="text-herb">Modern Skin</span>
+          </h2>
+          <ul class="space-y-3 mb-6">
+            ${['100% Natural, Plant-Based Ingredients','Ancient Ayurvedic Formulations','Dermatologically Tested & Safe'].map(pt => `
+            <li class="flex items-center gap-3">
+              <span class="w-6 h-6 rounded-full bg-herb flex items-center justify-center text-white text-xs font-bold flex-shrink-0">✓</span>
+              <span class="text-stone-600 text-sm">${pt}</span>
+            </li>`).join('')}
+          </ul>
+          <p class="text-stone-500 text-sm leading-relaxed mb-6">
+            Estée Aura was born from a deep belief in the healing power of nature. Every product we craft draws from centuries-old Ayurvedic wisdom, using only the finest organic herbs and botanicals, formulated for modern skin concerns.
+          </p>
+          <div class="flex items-center gap-5 flex-wrap">
+            <button onclick="navigate('about')"
+                    class="bg-herb text-white font-semibold px-7 py-3 rounded-full hover:bg-forest transition-colors text-sm shadow-md">
+              Discover Our Story
+            </button>
+            <div class="flex items-center gap-2">
+              <span class="text-amber-400 text-sm">★★★★★</span>
+              <span class="text-stone-400 text-xs">Rated 4.9/5 by 500+ customers</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative fade-up">
+          <div class="rounded-3xl overflow-hidden shadow-2xl">
+            <img src="Product-3.jpeg" alt="Estée Aura Products" loading="lazy"
+                 class="w-full h-80 sm:h-96 object-cover">
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl p-4 shadow-xl border border-stone-100">
+            <p class="text-2xl font-extrabold text-herb">500+</p>
+            <p class="text-xs text-stone-500 font-medium">Happy Customers</p>
+          </div>
+          <div class="absolute -top-4 -right-4 bg-earth text-white rounded-2xl p-4 shadow-xl">
+            <p class="text-2xl font-extrabold text-gold">100%</p>
+            <p class="text-xs text-white/65">Natural & Safe</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="fade-up mb-16 bg-forest rounded-3xl p-8 md:p-12" aria-labelledby="reviews-h">
-    <div class="text-center mb-10">
-      <p class="text-gold text-sm font-semibold uppercase tracking-widest mb-1">What Customers Say</p>
-      <h2 id="reviews-h" class="font-serif text-3xl font-bold text-white">Real Results, Real People</h2>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      ${[
-        { name: 'Priya S.', city: 'Mumbai', text: "The Ashwagandha powder has genuinely changed my sleep quality and how I handle workplace stress. I've tried 4 other brands — this is the only one that worked.", prod: 'Ashwagandha Root Powder' },
-        { name: 'Arjun M.', city: 'Bengaluru', text: "Chyawanprash every morning with milk. Six months in and I haven't had a single cold. My wife jokes I've become an Ayurveda evangelist.", prod: 'Chyawanprash Premium' },
-        { name: 'Neha R.', city: 'Delhi', text: "The Kumkumadi oil is worth every rupee. Three weeks in and colleagues are asking what I changed in my skincare routine. Absolutely glowing.", prod: 'Kumkumadi Skin Elixir' },
-      ].map(t => `
-      <blockquote class="bg-white/10 rounded-2xl p-6 text-white">
-        <div class="text-amber-400 mb-3 text-sm" aria-label="5 star rating">★★★★★</div>
-        <p class="text-white/85 text-sm leading-relaxed mb-4 italic">"${t.text}"</p>
-        <footer>
-          <p class="font-semibold text-sm">${t.name}</p>
-          <p class="text-white/55 text-xs">${t.city} · ${t.prod}</p>
-        </footer>
-      </blockquote>`).join('')}
+  <!-- ══ SECTION 3: Trending Products ══ -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="flex items-end justify-between mb-10">
+        <div class="fade-up">
+          <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Our Collection</p>
+          <h2 class="text-3xl font-extrabold text-earth">Trending Products</h2>
+        </div>
+        <button onclick="navigate('products')" class="text-herb text-sm font-semibold hover:text-forest transition-colors flex items-center gap-1 fade-up">
+          View All <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 fade-up">
+        ${PRODUCTS.map(productCard).join('')}
+      </div>
     </div>
   </section>
 
-  <section class="fade-up mb-12 bg-gradient-to-r from-amber-50 to-amber-100 rounded-3xl p-10 text-center border border-amber-200">
-    <h2 class="font-serif text-3xl font-bold text-earth mb-3">Begin Your Wellness Journey</h2>
-    <p class="text-stone-500 mb-6 max-w-lg mx-auto">Explore our full range of authentic Ayurvedic products, crafted with tradition and tested with science.</p>
-    <a href="#products" class="inline-block bg-forest text-white font-bold px-10 py-3 rounded-full hover:bg-herb transition-colors shadow-md">
-      Shop All Products
-    </a>
+  <!-- ══ SECTION 4: Features + Banners ══ -->
+  <section class="py-16 sm:py-20" style="background:#f0f5e8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-14 items-start">
+        <div class="fade-up">
+          <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Why Choose Us</p>
+          <h2 class="text-3xl font-extrabold text-earth mb-8">The Estée Aura Difference</h2>
+          <div class="space-y-4">
+            ${FEATS.map(f => `
+            <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-stone-100 hover:shadow-md transition-shadow">
+              <div class="w-12 h-12 bg-herb/10 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">${f.icon}</div>
+              <div>
+                <h3 class="font-bold text-earth text-sm mb-1">${f.t}</h3>
+                <p class="text-stone-500 text-xs leading-relaxed">${f.d}</p>
+              </div>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 fade-up">
+          <div class="relative rounded-2xl overflow-hidden h-52 group cursor-pointer" onclick="navigate('products')">
+            <img src="Product-2.jpeg" alt="Face Masks Collection" loading="lazy"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+            <div class="absolute inset-0 flex flex-col justify-center px-8">
+              <p class="text-gold text-[10px] font-bold uppercase tracking-widest mb-1">Collection</p>
+              <h3 class="text-white text-2xl font-extrabold mb-3">Face Masks</h3>
+              <button class="self-start text-xs border border-white text-white px-5 py-2 rounded-full hover:bg-white hover:text-earth transition-colors font-semibold">
+                Shop Now
+              </button>
+            </div>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden h-52 group cursor-pointer" onclick="navigate('products')">
+            <img src="Product-3.jpeg" alt="Serums and Oils" loading="lazy"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+            <div class="absolute inset-0 flex flex-col justify-center px-8">
+              <p class="text-gold text-[10px] font-bold uppercase tracking-widest mb-1">Featured</p>
+              <h3 class="text-white text-2xl font-extrabold mb-3">Serums & Oils</h3>
+              <button class="self-start text-xs border border-white text-white px-5 py-2 rounded-full hover:bg-white hover:text-earth transition-colors font-semibold">
+                Shop Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SECTION 5: Certifications ══ -->
+  <section class="py-12 bg-white border-t border-b border-stone-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="text-center mb-8 fade-up">
+        <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Quality Assurance</p>
+        <h2 class="text-2xl font-extrabold text-earth">Trusted & Certified</h2>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 fade-up">
+        ${[
+          { icon:'🌾', name:'USDA Organic' },
+          { icon:'🏭', name:'GMP Certified' },
+          { icon:'🕊️', name:'Cruelty Free' },
+          { icon:'🔬', name:'Dermatologically Tested' },
+          { icon:'🌱', name:'100% Natural' },
+        ].map(c => `
+        <div class="flex flex-col items-center gap-2 bg-cream rounded-2xl px-6 py-4 border border-herb/15 min-w-[110px] hover:border-herb/40 transition-colors">
+          <span class="text-3xl">${c.icon}</span>
+          <p class="text-earth font-semibold text-xs text-center">${c.name}</p>
+        </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SECTION 6: Top Selling + Countdown ══ -->
+  <section class="py-16 sm:py-20" style="background:#f7faf0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="text-center mb-10 fade-up">
+        <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Flash Sale</p>
+        <h2 class="text-3xl font-extrabold text-earth">Limited Time Offers</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 fade-up">
+        ${[
+          { id:1, name:'Lumi Correct Cream',   price:699, mrp:899, img:'Product-4.jpeg', disc:22 },
+          { id:2, name:'Kumkumadi Face Mask',   price:549, mrp:699, img:'Product-2.jpeg', disc:21 },
+        ].map(p => `
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 flex flex-col sm:flex-row group hover:shadow-xl transition-shadow">
+          <div class="sm:w-52 h-52 sm:h-auto overflow-hidden flex-shrink-0 cursor-pointer" onclick="navigate('product',{id:${p.id}})">
+            <img src="${p.img}" alt="${p.name}" loading="lazy"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <div class="flex-1 p-5 sm:p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs bg-red-100 text-red-600 px-2.5 py-0.5 rounded-full font-bold">${p.disc}% OFF</span>
+                <span class="text-amber-400 text-sm">★★★★★</span>
+              </div>
+              <h3 class="font-extrabold text-earth text-lg mb-2 mt-2">${p.name}</h3>
+              <div class="flex items-baseline gap-2 mb-4">
+                <span class="text-2xl font-extrabold text-herb">${fmtPrice(p.price)}</span>
+                <span class="text-sm text-stone-400 line-through">${fmtPrice(p.mrp)}</span>
+              </div>
+              <p class="text-stone-400 text-xs mb-3 font-medium uppercase tracking-wide">Offer Ends In:</p>
+              <div class="flex gap-2 mb-5">
+                ${['DD','HH','MM','SS'].map((unit,i) => `
+                <div class="flex-1 text-center bg-earth rounded-xl py-2.5 px-1">
+                  <div class="countdown-val text-white font-extrabold text-xl leading-none" data-unit="${i}">00</div>
+                  <div class="text-white/45 text-[9px] mt-1 tracking-wider">${unit}</div>
+                </div>`).join('')}
+              </div>
+            </div>
+            <button onclick="whatsappBuy('${p.name.replace(/'/g,"\\'")}')"
+                    class="w-full flex items-center justify-center gap-2 bg-green-500 text-white font-bold py-3 rounded-full hover:bg-green-600 transition-colors text-sm shadow-sm">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/></svg>
+              Buy via WhatsApp
+            </button>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SECTION 7: Benefits Strip ══ -->
+  <section class="py-12" style="background:#1a2600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        ${[
+          { icon:'🚚', t:'Free Shipping',   s:'On orders above ₹999' },
+          { icon:'💬', t:'24/7 Support',    s:'Always here for you' },
+          { icon:'🔒', t:'Secure Payment',  s:'100% safe checkout' },
+          { icon:'🔄', t:'Easy Returns',    s:'7-day return policy' },
+        ].map(b => `
+        <div class="flex flex-col items-center gap-3 p-4 text-center">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl" style="background:rgba(77,124,15,0.3)">${b.icon}</div>
+          <div>
+            <p class="text-white font-bold text-sm">${b.t}</p>
+            <p class="text-white/45 text-xs mt-0.5">${b.s}</p>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SECTION 8: Testimonials ══ -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="text-center mb-10 fade-up">
+        <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Customer Reviews</p>
+        <h2 class="text-3xl font-extrabold text-earth">What Our Customers Say</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 fade-up">
+        ${TESTI.map(t => `
+        <div class="relative bg-cream rounded-3xl p-6 border border-herb/10 hover:shadow-lg transition-shadow">
+          <div class="text-amber-400 text-sm mb-3">★★★★★</div>
+          <p class="text-stone-600 text-sm leading-relaxed mb-5 italic">"${t.text}"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-herb flex items-center justify-center text-white font-bold text-sm flex-shrink-0">${t.name[0]}</div>
+            <div>
+              <p class="font-bold text-earth text-sm">${t.name}</p>
+              <p class="text-stone-400 text-xs">${t.loc}</p>
+            </div>
+          </div>
+          <div class="absolute top-5 right-6 text-herb/15 font-serif leading-none select-none" style="font-size:5rem;line-height:1">"</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SECTION 9: Blog ══ -->
+  <section class="py-16 sm:py-20" style="background:#f7faf0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="flex items-end justify-between mb-10">
+        <div class="fade-up">
+          <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">From Our Blog</p>
+          <h2 class="text-3xl font-extrabold text-earth">Ayurvedic Insights</h2>
+        </div>
+        <button class="text-herb text-sm font-semibold hover:text-forest transition-colors fade-up">View All →</button>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 fade-up">
+        ${BLOGS.map(b => `
+        <article class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 group cursor-pointer hover:shadow-lg transition-shadow">
+          <div class="relative h-48 overflow-hidden">
+            <img src="${b.img}" alt="${b.title}" loading="lazy"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 bg-herb text-white text-xs px-3 py-1 rounded-full font-semibold">${b.cat}</div>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 text-stone-400 text-xs mb-3">
+              <span>${b.date}</span>
+              <span>·</span>
+              <span>5 min read</span>
+            </div>
+            <h3 class="font-extrabold text-earth text-base mb-2 leading-snug line-clamp-2 group-hover:text-herb transition-colors">${b.title}</h3>
+            <p class="text-stone-500 text-xs leading-relaxed line-clamp-2">${b.excerpt}</p>
+            <div class="mt-4 flex items-center text-herb text-xs font-semibold gap-1">Read More <span>→</span></div>
+          </div>
+        </article>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SECTION 10: Instagram Grid ══ -->
+  <section class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="text-center mb-10 fade-up">
+        <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Follow Us</p>
+        <h2 class="text-3xl font-extrabold text-earth">@esteeaura on Instagram</h2>
+      </div>
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3 fade-up">
+        ${IG.map(img => `
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+           class="relative overflow-hidden rounded-xl sm:rounded-2xl group block" style="aspect-ratio:1">
+          <img src="${img}" alt="Estée Aura on Instagram" loading="lazy"
+               class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <div class="absolute inset-0 flex items-center justify-center transition-colors" style="background:rgba(0,0,0,0)">
+            <div class="opacity-0 group-hover:opacity-100 transition-opacity" style="color:white">
+              <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="5"/>
+                <circle cx="17.5" cy="6.5" r="1.5" fill="white" stroke="none"/>
+              </svg>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors -z-0 rounded-xl sm:rounded-2xl"></div>
+          </div>
+        </a>`).join('')}
+      </div>
+      <div class="text-center mt-8 fade-up">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 text-white font-semibold px-8 py-3 rounded-full text-sm shadow-md hover:opacity-90 transition-opacity"
+           style="background:linear-gradient(135deg,#6366f1,#ec4899,#f97316)">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="5"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="white" stroke="none"/>
+          </svg>
+          Follow on Instagram
+        </a>
+      </div>
+    </div>
   </section>`;
-  requestAnimationFrame(() => { animateIn(el); initHeroSlider(); });
+
+  requestAnimationFrame(() => { animateIn(el); initHeroSlider(); initCountdown(); });
 }
 
 // ─── Page: About ──────────────────────────────────────────────────────────────
@@ -929,20 +1213,15 @@ function initMobileNav() {
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  initSidebar();
   initMobileNav();
   updateCartBadge();
   window.addEventListener('popstate', route);
 
-  // Intercept all nav link clicks — handle both [data-nav] and href="#page"
   document.addEventListener('click', e => {
-    const a = e.target.closest('a[data-nav], a[href^="#"]');
+    const a = e.target.closest('a[data-nav]');
     if (!a) return;
-    const pg = a.dataset.nav || a.getAttribute('href').replace(/^#/, '');
-    if (pg && RENDERERS[pg]) {
-      e.preventDefault();
-      navigate(pg);
-    }
+    const pg = a.dataset.nav;
+    if (pg && RENDERERS[pg]) { e.preventDefault(); navigate(pg); }
   });
 
   route();
