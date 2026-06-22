@@ -166,6 +166,30 @@ function initHeroSlider() {
   _heroTimer = setInterval(() => goTo(cur + 1), 3000);
 }
 
+// ─── YouTube Reels ────────────────────────────────────────────────────────────
+function initReels() {
+  const track = document.querySelector('.reels-track');
+  document.querySelectorAll('.reel-overlay').forEach(overlay => {
+    overlay.addEventListener('click', () => {
+      const card   = overlay.closest('.reel-card');
+      const iframe = card.querySelector('iframe');
+      // Enable iframe interaction
+      iframe.classList.remove('pointer-events-none');
+      // Unmute via YouTube postMessage API
+      const msg = (fn, args) => iframe.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: fn, args }), '*'
+      );
+      msg('unMute',    []);
+      msg('setVolume', [100]);
+      // Hide overlay
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      // Pause carousel so user can watch
+      if (track) track.classList.add('is-paused');
+    });
+  });
+}
+
 // ─── Countdown timer ──────────────────────────────────────────────────────────
 function initCountdown() {
   const target = new Date();
@@ -575,7 +599,57 @@ function renderHome(el) {
     </div>
   </section>
 
-  <!-- ══ SECTION 10: Instagram Grid ══ -->
+  <!-- ══ SECTION 10: YouTube Reels ══ -->
+  <section class="py-16" style="background:#0f0f0f">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 mb-10">
+      <div class="text-center">
+        <p class="text-herb text-xs font-bold uppercase tracking-widest mb-2">Watch & Learn</p>
+        <h2 class="text-3xl font-extrabold text-white">Ayurvedic Wellness Reels</h2>
+        <p class="text-white/40 text-sm mt-2">Tap any reel to unmute &amp; watch</p>
+      </div>
+    </div>
+    <div class="reels-viewport overflow-hidden">
+      <div class="reels-track flex gap-4 px-4" style="width:max-content">
+        ${[
+          { id:'Nnmrx_IXy-c', title:'Ayurvedic Daily Skincare Routine' },
+          { id:'Oz4FAT_hkO4', title:'Benefits of Kumkumadi Face Oil' },
+          { id:'9wYiT0LNFPE', title:'Turmeric Face Mask at Home' },
+          { id:'hFZFjoX2cGg', title:'Natural Glow with Ayurvedic Herbs' },
+          { id:'d4QJSMkLXnI', title:'Ayurvedic Secrets for Clear Skin' },
+          { id:'3noYHr2N7EY', title:'Rose Water & Sandalwood Skin Ritual' },
+        ].concat([
+          { id:'Nnmrx_IXy-c', title:'Ayurvedic Daily Skincare Routine' },
+          { id:'Oz4FAT_hkO4', title:'Benefits of Kumkumadi Face Oil' },
+          { id:'9wYiT0LNFPE', title:'Turmeric Face Mask at Home' },
+          { id:'hFZFjoX2cGg', title:'Natural Glow with Ayurvedic Herbs' },
+          { id:'d4QJSMkLXnI', title:'Ayurvedic Secrets for Clear Skin' },
+          { id:'3noYHr2N7EY', title:'Rose Water & Sandalwood Skin Ritual' },
+        ]).map(v => `
+        <div class="reel-card flex-shrink-0" style="width:195px">
+          <div class="relative rounded-2xl overflow-hidden" style="aspect-ratio:9/16">
+            <iframe
+              src="https://www.youtube.com/embed/${v.id}?autoplay=1&mute=1&loop=1&playlist=${v.id}&controls=1&rel=0&enablejsapi=1&modestbranding=1&playsinline=1"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              class="w-full h-full border-0 pointer-events-none"
+              title="${v.title}">
+            </iframe>
+            <div class="reel-overlay absolute inset-0 flex flex-col items-center justify-center cursor-pointer" style="background:rgba(0,0,0,0.25)">
+              <div class="w-14 h-14 rounded-full flex items-center justify-center mb-2" style="background:rgba(255,255,255,0.18);backdrop-filter:blur(6px)">
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="text-white text-xs font-semibold" style="text-shadow:0 1px 4px rgba(0,0,0,0.7)">Tap to unmute</p>
+            </div>
+          </div>
+          <p class="text-white/55 text-xs mt-2 text-center px-1 leading-snug"
+             style="display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">${v.title}</p>
+        </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SECTION 11: Instagram Grid ══ -->
   <section class="py-16 sm:py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
       <div class="text-center mb-10 fade-up">
@@ -615,7 +689,7 @@ function renderHome(el) {
     </div>
   </section>`;
 
-  requestAnimationFrame(() => { animateIn(el); initHeroSlider(); initCountdown(); });
+  requestAnimationFrame(() => { animateIn(el); initHeroSlider(); initCountdown(); initReels(); });
 }
 
 // ─── Page: About ──────────────────────────────────────────────────────────────

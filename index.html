@@ -71,6 +71,16 @@
 
     .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     #gal-main { transition: opacity 0.2s ease; }
+
+    /* ── YouTube Reels carousel ── */
+    @keyframes scroll-reels {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .reels-track { animation: scroll-reels 40s linear infinite; will-change: transform; }
+    .reels-track.is-paused,
+    .reels-viewport:hover .reels-track { animation-play-state: paused; }
+    .reel-overlay { transition: opacity 0.25s ease; }
     details > summary { list-style: none; }
     details > summary::-webkit-details-marker { display: none; }
     #toast { transition: transform 0.3s ease, opacity 0.3s ease; }
