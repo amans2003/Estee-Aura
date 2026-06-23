@@ -478,7 +478,7 @@ function renderHome(el) {
           <div class="space-y-4">
             ${FEATS.map(f => `
             <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-stone-100 hover:shadow-md transition-shadow">
-              <div class="w-12 h-12 bg-herb/10 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">${f.icon}</div>
+              <div class="w-12 h-12 bg-herb/10 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style="filter:grayscale(1) sepia(1) saturate(4) hue-rotate(55deg) brightness(0.6)">${f.icon}</div>
               <div>
                 <h3 class="font-bold text-earth text-sm mb-1">${f.t}</h3>
                 <p class="text-stone-500 text-xs leading-relaxed">${f.d}</p>
@@ -532,7 +532,7 @@ function renderHome(el) {
           { icon:'🌱', name:'100% Natural' },
         ].map(c => `
         <div class="flex flex-col items-center gap-3 bg-cream rounded-2xl px-8 py-6 border border-herb/15 hover:border-herb/50 hover:shadow-md transition-all w-40 sm:w-44">
-          <span class="text-5xl">${c.icon}</span>
+          <span class="text-5xl" style="filter:grayscale(1) sepia(1) saturate(4) hue-rotate(55deg) brightness(0.6)">${c.icon}</span>
           <p class="text-earth font-bold text-sm text-center leading-snug">${c.name}</p>
         </div>`).join('')}
       </div>
@@ -598,7 +598,7 @@ function renderHome(el) {
           { icon:'🔄', t:'Easy Returns',    s:'7-day return policy' },
         ].map(b => `
         <div class="flex flex-col items-center gap-3 p-4 text-center">
-          <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl" style="background:rgba(77,124,15,0.3)">${b.icon}</div>
+          <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl" style="background:rgba(77,124,15,0.3);filter:brightness(0) invert(1)">${b.icon}</div>
           <div>
             <p class="text-white font-bold text-sm">${b.t}</p>
             <p class="text-white/45 text-xs mt-0.5">${b.s}</p>
@@ -780,7 +780,7 @@ function renderAbout(el) {
         { icon: '💚', t: 'Community First', d: '5% of profits support rural Ayurvedic practitioners and organic farming education programmes.' },
       ].map(v=>`
       <div class="flex gap-4 p-4 bg-white rounded-2xl border border-stone-100 hover:shadow-md transition-shadow">
-        <span class="text-3xl flex-shrink-0 mt-0.5" aria-hidden="true">${v.icon}</span>
+        <span class="text-3xl flex-shrink-0 mt-0.5" aria-hidden="true" style="filter:grayscale(1) sepia(1) saturate(4) hue-rotate(55deg) brightness(0.6)">${v.icon}</span>
         <div>
           <h3 class="font-semibold text-earth mb-1 text-sm">${v.t}</h3>
           <p class="text-stone-500 text-xs leading-relaxed">${v.d}</p>
@@ -872,7 +872,7 @@ function getFilteredCards(cat, query) {
   );
   if (!results.length) return `
     <div class="col-span-full text-center py-20 text-stone-400">
-      <p class="text-5xl mb-4" aria-hidden="true">🌿</p>
+      <p class="text-5xl mb-4" aria-hidden="true" style="filter:grayscale(1) sepia(1) saturate(4) hue-rotate(55deg) brightness(0.6)">🌿</p>
       <p class="text-lg font-semibold">No products found</p>
       <p class="text-sm mt-1">Try a different search term or category</p>
     </div>`;
@@ -890,7 +890,7 @@ function renderProduct(el, params) {
   const p = PRODUCTS.find(x => x.id === +params.get('id'));
   if (!p) {
     el.innerHTML = `<div class="text-center py-24">
-      <p class="text-5xl mb-4" aria-hidden="true">🌿</p>
+      <p class="text-5xl mb-4" aria-hidden="true" style="filter:grayscale(1) sepia(1) saturate(4) hue-rotate(55deg) brightness(0.6)">🌿</p>
       <p class="text-stone-400 text-lg mb-4">Product not found.</p>
       <button onclick="navigate('products')" class="text-herb font-semibold hover:underline">← Back to Products</button>
     </div>`;
@@ -1079,7 +1079,7 @@ function renderContact(el) {
             { icon:'🕐', label:'Hours', val:'Mon–Sat: 9am – 7pm IST' },
           ].map(i=>`
           <div class="flex gap-3 items-start">
-            <span class="text-xl flex-shrink-0" aria-hidden="true">${i.icon}</span>
+            <span class="text-xl flex-shrink-0" aria-hidden="true" style="filter:grayscale(1) sepia(1) saturate(4) hue-rotate(55deg) brightness(0.6)">${i.icon}</span>
             <div>
               <p class="text-xs text-stone-400 font-semibold uppercase tracking-wide">${i.label}</p>
               <p class="text-stone-700 text-sm leading-relaxed">${i.val}</p>
