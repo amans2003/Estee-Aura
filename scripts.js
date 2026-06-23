@@ -378,30 +378,68 @@ function renderHome(el) {
       <img src="Product-4.jpeg" alt="Estée Aura Product"
            style="position:relative;z-index:1;max-height:min(440px,65vw);max-width:88%;object-fit:contain;filter:drop-shadow(0 16px 32px rgba(0,0,0,0.13))">
       <!-- Gold rotating badge seal -->
-      <div class="badge-spin" style="position:absolute;top:10px;right:4px;z-index:2;width:108px;height:108px;filter:drop-shadow(0 6px 18px rgba(212,172,13,0.45))">
-        <svg width="108" height="108" viewBox="0 0 108 108" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Outer fill -->
-          <circle cx="54" cy="54" r="52" fill="#D4AC0D"/>
-          <!-- Outer border -->
-          <circle cx="54" cy="54" r="52" stroke="rgba(255,255,255,0.55)" stroke-width="2.5"/>
-          <!-- Inner dashed ring -->
-          <circle cx="54" cy="54" r="42" stroke="rgba(26,38,0,0.28)" stroke-width="1.2" stroke-dasharray="3.5 3.5"/>
-          <!-- Circular text path (anti-clockwise: sweep-flag=0) -->
+      <div class="badge-spin" style="position:absolute;top:8px;right:2px;z-index:2;width:116px;height:116px;filter:drop-shadow(0 4px 16px rgba(212,172,13,0.5))">
+        <svg width="116" height="116" viewBox="0 0 116 116" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <path id="seal-ring" d="M54,7 A47,47 0 1,0 53.999,7"/>
+            <!-- Clockwise path for outer text -->
+            <path id="outer-text" d="M58,9 A49,49 0 1,1 57.99,9"/>
+            <!-- Inner ring path for second text row -->
+            <path id="inner-text" d="M58,23 A35,35 0 1,1 57.99,23"/>
           </defs>
-          <text font-size="8" font-weight="800" fill="#1a2600" letter-spacing="2.8" font-family="Jost,sans-serif">
-            <textPath href="#seal-ring">✦ CERTIFIED ORGANIC ✦ SINCE 2018 </textPath>
+
+          <!-- ① Base gold circle -->
+          <circle cx="58" cy="58" r="56" fill="#D4AC0D"/>
+
+          <!-- ② Outer white glow ring -->
+          <circle cx="58" cy="58" r="56" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+
+          <!-- ③ First dark ring -->
+          <circle cx="58" cy="58" r="51" stroke="#1a2600" stroke-width="0.9" opacity="0.45"/>
+
+          <!-- ④ Outer circular text: CERTIFIED ORGANIC · ESTÉE AURA · SINCE 2018 -->
+          <text font-size="6.8" font-weight="700" fill="#1a2600" letter-spacing="2.6" font-family="Georgia,serif">
+            <textPath href="#outer-text">CERTIFIED ORGANIC · SINCE 2018 · AYURVEDIC ·</textPath>
           </text>
-          <!-- Center leaf motif -->
-          <path d="M54 30 C43 37,34 47,34 56 C34 68,44 76,54 74 C64 76,74 68,74 56 C74 47,65 37,54 30Z" fill="rgba(26,38,0,0.13)" stroke="#1a2600" stroke-width="1.4"/>
-          <line x1="54" y1="30" x2="54" y2="74" stroke="#1a2600" stroke-width="1.2"/>
-          <path d="M54 42 C47 45,40 47,34 48" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
-          <path d="M54 52 C47 54,40 56,34 57" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
-          <path d="M54 62 C47 63,40 65,35 66" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
-          <path d="M54 42 C61 45,68 47,74 48" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
-          <path d="M54 52 C61 54,68 56,74 57" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
-          <path d="M54 62 C61 63,68 65,73 66" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+
+          <!-- ⑤ Second dark ring (text separator) -->
+          <circle cx="58" cy="58" r="42" stroke="#1a2600" stroke-width="0.9" opacity="0.4"/>
+
+          <!-- ⑥ Decorative dashed ring -->
+          <circle cx="58" cy="58" r="39" stroke="#1a2600" stroke-width="1" stroke-dasharray="2.5 2.8" opacity="0.35"/>
+
+          <!-- ⑦ Inner white ring -->
+          <circle cx="58" cy="58" r="36" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+
+          <!-- ⑧ Soft inner fill circle -->
+          <circle cx="58" cy="58" r="35" fill="rgba(26,38,0,0.07)"/>
+
+          <!-- ⑨ Center mandala: 8 petals -->
+          <g transform="translate(58,58)">
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)"/>
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)" transform="rotate(45)"/>
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)" transform="rotate(90)"/>
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)" transform="rotate(135)"/>
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)" transform="rotate(180)"/>
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)" transform="rotate(225)"/>
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)" transform="rotate(270)"/>
+            <path d="M0,-22 C5,-15 5,-3 0,3 C-5,-3 -5,-15 0,-22Z" fill="rgba(26,38,0,0.22)" transform="rotate(315)"/>
+            <!-- Center disc -->
+            <circle r="11" fill="rgba(26,38,0,0.18)" stroke="rgba(26,38,0,0.4)" stroke-width="0.8"/>
+            <!-- Brand initials -->
+            <text text-anchor="middle" y="-2" font-size="7" font-weight="900" fill="#1a2600" font-family="Georgia,serif" letter-spacing="0.5">EA</text>
+            <line x1="-6" y1="2" x2="6" y2="2" stroke="#1a2600" stroke-width="0.7" opacity="0.6"/>
+            <text text-anchor="middle" y="8" font-size="3.8" font-weight="700" fill="#1a2600" font-family="Georgia,serif" letter-spacing="0.8">AURA</text>
+          </g>
+
+          <!-- ⑩ 8 small dots at cardinal + diagonal positions -->
+          <circle cx="58"  cy="44"  r="1.6" fill="#1a2600" opacity="0.35"/>
+          <circle cx="58"  cy="72"  r="1.6" fill="#1a2600" opacity="0.35"/>
+          <circle cx="44"  cy="58"  r="1.6" fill="#1a2600" opacity="0.35"/>
+          <circle cx="72"  cy="58"  r="1.6" fill="#1a2600" opacity="0.35"/>
+          <circle cx="48.1" cy="48.1" r="1.3" fill="#1a2600" opacity="0.25"/>
+          <circle cx="67.9" cy="48.1" r="1.3" fill="#1a2600" opacity="0.25"/>
+          <circle cx="48.1" cy="67.9" r="1.3" fill="#1a2600" opacity="0.25"/>
+          <circle cx="67.9" cy="67.9" r="1.3" fill="#1a2600" opacity="0.25"/>
         </svg>
       </div>
     </div>
