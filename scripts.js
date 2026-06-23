@@ -148,22 +148,24 @@ let _heroTimer = null;
 
 function initHeroSlider() {
   if (_heroTimer) clearInterval(_heroTimer);
-  const slides = document.querySelectorAll('.hero-slide');
+  const slides = document.querySelectorAll('.hero-text-slide');
   const dots   = document.querySelectorAll('.hero-dot');
   if (slides.length < 2) return;
   let cur = 0;
 
   function goTo(next) {
-    slides[cur].style.opacity = '0';
-    dots[cur].style.opacity  = '0.35';
-    dots[cur].style.width    = '8px';
+    slides[cur].style.opacity      = '0';
+    slides[cur].style.pointerEvents = 'none';
+    dots[cur].style.opacity        = '0.3';
+    dots[cur].style.width          = '8px';
     cur = next % slides.length;
-    slides[cur].style.opacity = '1';
-    dots[cur].style.opacity   = '1';
-    dots[cur].style.width     = '28px';
+    slides[cur].style.opacity      = '1';
+    slides[cur].style.pointerEvents = 'auto';
+    dots[cur].style.opacity        = '1';
+    dots[cur].style.width          = '28px';
   }
 
-  _heroTimer = setInterval(() => goTo(cur + 1), 3000);
+  _heroTimer = setInterval(() => goTo(cur + 1), 4000);
 }
 
 // ─── YouTube Reels lightbox ───────────────────────────────────────────────────
@@ -283,53 +285,109 @@ const reelsHTML = [...REEL_VIDS, ...REEL_VIDS].map(function(v) {
 
 // ─── Page: Home ───────────────────────────────────────────────────────────────
 function renderHome(el) {
-  const heroImgs = [
-    'https://images.pexels.com/photos/4589169/pexels-photo-4589169.jpeg?auto=compress&cs=tinysrgb&w=1400',
-    'https://images.pexels.com/photos/7829483/pexels-photo-7829483.jpeg?auto=compress&cs=tinysrgb&w=1400',
-    'https://images.pexels.com/photos/4871315/pexels-photo-4871315.jpeg?auto=compress&cs=tinysrgb&w=1400',
+  const HERO_SLIDES = [
+    {
+      tag:  'Pure Ayurvedic Skincare',
+      h1:   'Glow with the Power<br>of <span style="color:#4d7c0f">Ancient Herbs</span>',
+      sub:  'Handcrafted formulas from certified organic farms across India — no chemicals, no compromise.',
+      feat: '100% Natural · Free from Parabens & Sulfates',
+    },
+    {
+      tag:  'Trusted & Certified',
+      h1:   'Ancient Wisdom,<br><span style="color:#4d7c0f">Modern Radiance</span>',
+      sub:  'Every product is rooted in centuries-old Ayurvedic texts and validated by modern dermatology.',
+      feat: 'Lab Tested · Dermatologist Approved',
+    },
+    {
+      tag:  'Award-Winning Formulas',
+      h1:   'Nourish. Brighten.<br><span style="color:#4d7c0f">Transform Your Skin</span>',
+      sub:  'Our Kumkumadi blends and herbal serums deliver visible results in as little as 14 days.',
+      feat: 'Cruelty Free · GMP Certified · USDA Organic',
+    },
   ];
 
   // ── Hero ──
   const heroSlot = document.getElementById('hero-slot');
   if (heroSlot) {
     heroSlot.innerHTML = `
-<section class="relative w-full overflow-hidden"
-         style="height:calc(100vh - 108px);min-height:520px;max-height:860px"
-         aria-label="Hero slideshow">
-  ${heroImgs.map((src, i) => `
-  <div class="hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat"
-       style="background-image:url('${src}');opacity:${i===0?1:0};transition:opacity 1.2s ease-in-out"
-       role="img" aria-hidden="${i!==0}"></div>`).join('')}
-  <div class="absolute inset-0 bg-black/55"></div>
-  <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/45"></div>
-  <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-5 sm:px-10">
-    <p class="text-gold text-[11px] sm:text-xs font-bold uppercase tracking-[0.28em] mb-3 sm:mb-4">
-      Since 2018 &nbsp;·&nbsp; Certified Organic
-    </p>
-    <h1 class="font-sans font-extrabold text-white leading-tight mb-4 sm:mb-5"
-        style="font-size:clamp(2rem,6vw,4.5rem)">
-      Ancient Wisdom,<br>
-      <span style="color:#D4AC0D">Modern Wellness</span>
-    </h1>
-    <p class="text-white/80 leading-relaxed mb-7 sm:mb-9"
-       style="font-size:clamp(0.9rem,2vw,1.1rem);max-width:540px">
-      Discover the healing power of authentic Ayurveda — crafted from the finest organic herbs, following formulations passed down through generations.
-    </p>
-    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0">
-      <button onclick="navigate('products')"
-              class="bg-herb text-white font-bold px-9 py-3.5 rounded-full hover:bg-forest transition-colors shadow-lg text-sm sm:text-base">
-        Shop Now
-      </button>
-      <button onclick="navigate('about')"
-              class="border-2 border-white/60 text-white font-semibold px-9 py-3.5 rounded-full hover:bg-white/15 transition-colors text-sm sm:text-base">
-        Our Story
-      </button>
+<section class="relative w-full overflow-hidden" style="background:#f7faf0;min-height:560px" aria-label="Hero">
+
+  <!-- Faded leaf watermarks -->
+  <div class="absolute inset-0 pointer-events-none select-none" style="overflow:hidden">
+    <svg style="position:absolute;left:-60px;top:5%;width:340px;height:340px;opacity:0.055" viewBox="0 0 200 200" fill="none">
+      <path d="M100 10 C60 10,10 60,10 100 C10 160,60 190,100 190 C140 190,190 140,100 10Z" fill="#2d4a06"/>
+      <path d="M100 10 L100 190" stroke="#2d4a06" stroke-width="2"/>
+      <path d="M100 40 C80 60,40 80,20 100" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 70 C75 85,45 95,18 105" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 100 C70 110,42 115,15 118" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 40 C120 60,160 80,180 100" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 70 C125 85,155 95,182 105" stroke="#2d4a06" stroke-width="1.2"/>
+    </svg>
+    <svg style="position:absolute;left:60px;bottom:-40px;width:200px;height:200px;opacity:0.04;transform:rotate(-30deg)" viewBox="0 0 200 200" fill="none">
+      <path d="M100 10 C60 10,10 60,10 100 C10 160,60 190,100 190 C140 190,190 140,100 10Z" fill="#2d4a06"/>
+      <path d="M100 10 L100 190" stroke="#2d4a06" stroke-width="2"/>
+      <path d="M100 50 C78 68,45 82,18 96" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 80 C75 92,44 100,16 108" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 50 C122 68,155 82,182 96" stroke="#2d4a06" stroke-width="1.2"/>
+    </svg>
+    <svg style="position:absolute;right:46%;top:-30px;width:160px;height:160px;opacity:0.035;transform:rotate(15deg)" viewBox="0 0 200 200" fill="none">
+      <path d="M100 10 C60 10,10 60,10 100 C10 160,60 190,100 190 C140 190,190 140,100 10Z" fill="#2d4a06"/>
+      <path d="M100 10 L100 190" stroke="#2d4a06" stroke-width="2"/>
+      <path d="M100 60 C78 72,44 84,18 96" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 90 C76 100,44 106,16 112" stroke="#2d4a06" stroke-width="1.2"/>
+      <path d="M100 60 C122 72,156 84,182 96" stroke="#2d4a06" stroke-width="1.2"/>
+    </svg>
+  </div>
+
+  <!-- Content grid -->
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 grid md:grid-cols-2 gap-8 items-center" style="min-height:560px;padding-top:56px;padding-bottom:72px">
+
+    <!-- Left: text slides -->
+    <div class="relative" style="min-height:320px">
+      ${HERO_SLIDES.map((s, i) => `
+      <div class="hero-text-slide absolute inset-0 flex flex-col justify-center"
+           style="opacity:${i===0?1:0};transition:opacity 0.9s ease;pointer-events:${i===0?'auto':'none'}">
+        <p style="color:#4d7c0f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.22em;margin-bottom:14px">${s.tag}</p>
+        <h1 style="font-size:clamp(2rem,3.8vw,3rem);font-weight:900;color:#1a2600;line-height:1.18;margin-bottom:18px;font-family:'Jost',sans-serif">${s.h1}</h1>
+        <p style="color:#5a6a4a;font-size:15px;line-height:1.75;margin-bottom:24px;max-width:440px">${s.sub}</p>
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:36px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;filter:grayscale(1) sepia(1) saturate(4) hue-rotate(55deg) brightness(0.6)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="#4d7c0f"/><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z" stroke="#4d7c0f" stroke-width="1.5" fill="none"/><path d="M8 12 C9 8,12 6,16 8" stroke="#4d7c0f" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+          <span style="font-weight:700;color:#1a2600;font-size:13.5px">${s.feat}</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button onclick="navigate('products')"
+                  style="background:#4d7c0f;color:white;font-weight:700;padding:13px 30px;border-radius:50px;border:none;cursor:pointer;font-size:15px;display:flex;align-items:center;gap:9px;box-shadow:0 4px 18px rgba(77,124,15,0.3);transition:background 0.2s"
+                  onmouseover="this.style.background='#2d4a06'" onmouseout="this.style.background='#4d7c0f'">
+            Start Shopping
+            <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <button onclick="navigate('about')"
+                  style="background:transparent;color:#2d4a06;font-weight:700;padding:13px 26px;border-radius:50px;border:2px solid #4d7c0f;cursor:pointer;font-size:15px;transition:all 0.2s"
+                  onmouseover="this.style.background='#4d7c0f';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='#2d4a06'">
+            Our Story
+          </button>
+        </div>
+      </div>`).join('')}
+    </div>
+
+    <!-- Right: product image -->
+    <div class="hidden md:flex items-center justify-center relative" style="min-height:440px">
+      <!-- White circle glow -->
+      <div style="position:absolute;width:370px;height:370px;border-radius:50%;background:white;opacity:0.75;box-shadow:0 8px 60px rgba(77,124,15,0.1)"></div>
+      <!-- Product -->
+      <img src="Product-4.jpeg" alt="Estée Aura Product"
+           style="position:relative;z-index:1;max-height:440px;max-width:88%;object-fit:contain;filter:drop-shadow(0 16px 32px rgba(0,0,0,0.13))">
+      <!-- Gold badge -->
+      <div style="position:absolute;top:16px;right:8px;width:88px;height:88px;border-radius:50%;background:#D4AC0D;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(212,172,13,0.4);border:3px solid rgba(255,255,255,0.7);z-index:2;text-align:center">
+        <span style="font-size:8.5px;font-weight:900;color:#1a2600;text-transform:uppercase;letter-spacing:0.04em;line-height:1.4">Since<br>2018<br>Certified<br>Organic</span>
+      </div>
     </div>
   </div>
-  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
-    ${heroImgs.map((_, i) => `
-    <div class="hero-dot rounded-full bg-white"
-         style="height:5px;width:${i===0?'28px':'8px'};opacity:${i===0?1:0.35};transition:all 0.45s ease"></div>`).join('')}
+
+  <!-- Slide dots -->
+  <div style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px">
+    ${HERO_SLIDES.map((_, i) => `
+    <div class="hero-dot" style="height:5px;width:${i===0?28:8}px;border-radius:9999px;background:#2d4a06;opacity:${i===0?1:0.3};transition:all 0.4s ease;cursor:pointer"></div>`).join('')}
   </div>
 </section>`;
   }
