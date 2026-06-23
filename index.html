@@ -104,7 +104,25 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
       <!-- Left: delivery message -->
       <p class="font-bold tracking-wide flex items-center gap-2" style="color:#000">
-        <span style="font-size:16px;filter:grayscale(1) brightness(0)">🚚</span>
+        <!-- Delivery truck SVG: faces right, yellow windshield, no bg -->
+        <svg width="28" height="20" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+          <!-- Cargo box -->
+          <rect x="1" y="3" width="19" height="14" rx="2" fill="#1a2600"/>
+          <!-- Cab body -->
+          <path d="M20 7 L20 17 L34 17 L34 12 L29 7 Z" fill="#1a2600"/>
+          <!-- Windshield glass — yellow -->
+          <path d="M21.5 8.5 L27.5 8.5 L31.5 12.5 L21.5 12.5 Z" fill="#D4AC0D" opacity="0.95"/>
+          <!-- Cab side window outline -->
+          <rect x="20.5" y="7.5" width="1" height="9" fill="#2d4a06"/>
+          <!-- Chassis underline -->
+          <rect x="1" y="17" width="33" height="1.5" rx="0.5" fill="#2d4a06"/>
+          <!-- Rear wheel -->
+          <circle cx="9" cy="20" r="3.5" fill="#1a2600"/>
+          <circle cx="9" cy="20" r="1.5" fill="#D4AC0D"/>
+          <!-- Front wheel -->
+          <circle cx="27" cy="20" r="3.5" fill="#1a2600"/>
+          <circle cx="27" cy="20" r="1.5" fill="#D4AC0D"/>
+        </svg>
         Free next day delivery when you spend over $40
       </p>
       <!-- Right: socials + help + phone -->
