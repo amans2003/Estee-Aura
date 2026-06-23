@@ -340,7 +340,7 @@ function renderHome(el) {
   </div>
 
   <!-- Content grid -->
-  <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 grid md:grid-cols-2 gap-8 items-center" style="min-height:560px;padding-top:56px;padding-bottom:72px">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 grid md:grid-cols-2 gap-6 items-center" style="min-height:560px;padding-top:36px;padding-bottom:80px">
 
     <!-- Left: text slides -->
     <div class="relative" style="min-height:320px">
@@ -371,12 +371,12 @@ function renderHome(el) {
     </div>
 
     <!-- Right: product image -->
-    <div class="hidden md:flex items-center justify-center relative" style="min-height:440px">
+    <div class="flex items-center justify-center relative" style="min-height:260px">
       <!-- White circle glow -->
-      <div style="position:absolute;width:370px;height:370px;border-radius:50%;background:white;opacity:0.75;box-shadow:0 8px 60px rgba(77,124,15,0.1)"></div>
+      <div style="position:absolute;width:min(370px,72vw);height:min(370px,72vw);border-radius:50%;background:white;opacity:0.75;box-shadow:0 8px 60px rgba(77,124,15,0.1)"></div>
       <!-- Product -->
       <img src="Product-4.jpeg" alt="Estée Aura Product"
-           style="position:relative;z-index:1;max-height:440px;max-width:88%;object-fit:contain;filter:drop-shadow(0 16px 32px rgba(0,0,0,0.13))">
+           style="position:relative;z-index:1;max-height:min(440px,65vw);max-width:88%;object-fit:contain;filter:drop-shadow(0 16px 32px rgba(0,0,0,0.13))">
       <!-- Gold badge -->
       <div style="position:absolute;top:16px;right:8px;width:88px;height:88px;border-radius:50%;background:#D4AC0D;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(212,172,13,0.4);border:3px solid rgba(255,255,255,0.7);z-index:2;text-align:center">
         <span style="font-size:8.5px;font-weight:900;color:#1a2600;text-transform:uppercase;letter-spacing:0.04em;line-height:1.4">Since<br>2018<br>Certified<br>Organic</span>
