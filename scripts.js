@@ -377,9 +377,32 @@ function renderHome(el) {
       <!-- Product -->
       <img src="Product-4.jpeg" alt="Estée Aura Product"
            style="position:relative;z-index:1;max-height:min(440px,65vw);max-width:88%;object-fit:contain;filter:drop-shadow(0 16px 32px rgba(0,0,0,0.13))">
-      <!-- Gold badge -->
-      <div style="position:absolute;top:16px;right:8px;width:88px;height:88px;border-radius:50%;background:#D4AC0D;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(212,172,13,0.4);border:3px solid rgba(255,255,255,0.7);z-index:2;text-align:center">
-        <span style="font-size:8.5px;font-weight:900;color:#1a2600;text-transform:uppercase;letter-spacing:0.04em;line-height:1.4">Since<br>2018<br>Certified<br>Organic</span>
+      <!-- Gold rotating badge seal -->
+      <div class="badge-spin" style="position:absolute;top:10px;right:4px;z-index:2;width:108px;height:108px;filter:drop-shadow(0 6px 18px rgba(212,172,13,0.45))">
+        <svg width="108" height="108" viewBox="0 0 108 108" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer fill -->
+          <circle cx="54" cy="54" r="52" fill="#D4AC0D"/>
+          <!-- Outer border -->
+          <circle cx="54" cy="54" r="52" stroke="rgba(255,255,255,0.55)" stroke-width="2.5"/>
+          <!-- Inner dashed ring -->
+          <circle cx="54" cy="54" r="42" stroke="rgba(26,38,0,0.28)" stroke-width="1.2" stroke-dasharray="3.5 3.5"/>
+          <!-- Circular text path (anti-clockwise: sweep-flag=0) -->
+          <defs>
+            <path id="seal-ring" d="M54,7 A47,47 0 1,0 53.999,7"/>
+          </defs>
+          <text font-size="8" font-weight="800" fill="#1a2600" letter-spacing="2.8" font-family="Jost,sans-serif">
+            <textPath href="#seal-ring">✦ CERTIFIED ORGANIC ✦ SINCE 2018 </textPath>
+          </text>
+          <!-- Center leaf motif -->
+          <path d="M54 30 C43 37,34 47,34 56 C34 68,44 76,54 74 C64 76,74 68,74 56 C74 47,65 37,54 30Z" fill="rgba(26,38,0,0.13)" stroke="#1a2600" stroke-width="1.4"/>
+          <line x1="54" y1="30" x2="54" y2="74" stroke="#1a2600" stroke-width="1.2"/>
+          <path d="M54 42 C47 45,40 47,34 48" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+          <path d="M54 52 C47 54,40 56,34 57" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+          <path d="M54 62 C47 63,40 65,35 66" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+          <path d="M54 42 C61 45,68 47,74 48" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+          <path d="M54 52 C61 54,68 56,74 57" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+          <path d="M54 62 C61 63,68 65,73 66" stroke="#1a2600" stroke-width="0.9" stroke-linecap="round" fill="none"/>
+        </svg>
       </div>
     </div>
   </div>
