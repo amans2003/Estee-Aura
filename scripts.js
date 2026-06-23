@@ -375,7 +375,7 @@ function renderHome(el) {
       <!-- White circle glow -->
       <div style="position:absolute;width:min(370px,72vw);height:min(370px,72vw);border-radius:50%;background:white;opacity:0.75;box-shadow:0 8px 60px rgba(77,124,15,0.1)"></div>
       <!-- Product -->
-      <img src="Product-4.jpeg" alt="Estée Aura Product"
+      <img src="hero-img.png" alt="Estée Aura Product"
            style="position:relative;z-index:1;max-height:min(440px,65vw);max-width:88%;object-fit:contain;filter:drop-shadow(0 16px 32px rgba(0,0,0,0.13))">
       <!-- Gold rotating badge seal -->
       <div class="badge-spin" style="position:absolute;top:8px;right:2px;z-index:2;width:116px;height:116px;filter:drop-shadow(0 4px 16px rgba(212,172,13,0.5))">
