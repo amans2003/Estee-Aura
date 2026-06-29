@@ -101,7 +101,6 @@ function productCard(p) {
            onkeydown="if(event.key==='Enter'||event.key===' '){navigate('product',{id:${p.id}})}">
     <div class="relative overflow-hidden h-48">
       ${badgeHTML(p.badge)}
-      ${disc ? `<span class="absolute top-3 right-3 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full font-semibold">${disc}% off</span>` : ''}
       <img src="${p.img}" alt="${p.name}" loading="lazy"
            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
            onerror="this.src='https://picsum.photos/seed/${p.id}/400/300'">
@@ -114,18 +113,12 @@ function productCard(p) {
         <span class="text-sm leading-none">${renderStars(p.stars)}</span>
         <span class="text-xs text-stone-400">(${p.reviews})</span>
       </div>
-      <div class="flex items-center justify-between gap-2">
-        <div class="leading-tight">
-          <span class="text-base font-bold text-earth">${fmtPrice(p.price)}</span>
-          ${p.mrp > p.price ? `<span class="text-xs text-stone-400 line-through ml-1">${fmtPrice(p.mrp)}</span>` : ''}
-        </div>
-        <button onclick="event.stopPropagation();whatsappBuy('${p.name.replace(/'/g, "\\'")}')"
-                class="flex items-center gap-1 text-xs bg-green-500 text-white px-3 py-1.5 rounded-full hover:bg-green-600 transition-colors whitespace-nowrap shadow-sm"
-                aria-label="Buy ${p.name} via WhatsApp">
-          <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/></svg>
-          Buy
-        </button>
-      </div>
+      <button onclick="event.stopPropagation();whatsappBuy('${p.name.replace(/'/g, "\\'")}')"
+              class="w-full flex items-center justify-center gap-1.5 text-xs bg-green-500 text-white px-3 py-2 rounded-full hover:bg-green-600 transition-colors shadow-sm"
+              aria-label="Buy ${p.name} via WhatsApp">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.18-.008-.38-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12 0C5.373 0 0 5.373 0 12c0 2.117.547 4.103 1.504 5.832L0 24l6.335-1.462A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0"/></svg>
+        Buy via WhatsApp
+      </button>
     </div>
   </article>`;
 }
@@ -455,10 +448,10 @@ function renderHome(el) {
 
   // ── Category data ──
   const CATS = [
-    { name: 'Face Creams', count: 3, img: 'Product-4.jpeg' },
-    { name: 'Face Masks',  count: 2, img: 'Product-2.jpeg' },
-    { name: 'Serums',      count: 4, img: 'Product-3.jpeg' },
-    { name: 'Cleansers',   count: 3, img: 'Product-3.jpeg' },
+    { name: 'Face Creams', count: 3, img: 'facecream.png' },
+    { name: 'Face Masks',  count: 2, img: 'facemask.png' },
+    { name: 'Serums',      count: 4, img: 'Serum.png' },
+    { name: 'Cleansers',   count: 3, img: 'facewash .png' },
     { name: 'Face Oils',   count: 5, img: 'https://images.pexels.com/photos/4589169/pexels-photo-4589169.jpeg?auto=compress&cs=tinysrgb&w=300' },
     { name: 'Gift Kits',   count: 2, img: 'https://images.pexels.com/photos/4871315/pexels-photo-4871315.jpeg?auto=compress&cs=tinysrgb&w=300' },
   ];
@@ -552,9 +545,23 @@ function renderHome(el) {
           </div>
         </div>
         <div class="relative fade-up">
-          <div class="rounded-3xl overflow-hidden shadow-2xl">
-            <img src="Product-3.jpeg" alt="Estée Aura Products" loading="lazy"
-                 class="w-full h-80 sm:h-96 object-cover">
+          <div class="grid grid-cols-2 gap-3 rounded-3xl overflow-hidden shadow-2xl">
+            <div class="overflow-hidden rounded-tl-3xl h-44 sm:h-52">
+              <img src="facecream.png" alt="Lumi Correct Cream" loading="lazy"
+                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="overflow-hidden rounded-tr-3xl h-44 sm:h-52">
+              <img src="facemask.png" alt="Kumkumadi Face Mask" loading="lazy"
+                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="overflow-hidden rounded-bl-3xl h-44 sm:h-52">
+              <img src="Serum.png" alt="True-Glow Serum" loading="lazy"
+                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="overflow-hidden rounded-br-3xl h-44 sm:h-52">
+              <img src="facewash .png" alt="Ayurvedic Foaming Cleanser" loading="lazy"
+                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+            </div>
           </div>
           <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl p-4 shadow-xl border border-stone-100">
             <p class="text-2xl font-extrabold text-herb">500+</p>
@@ -607,7 +614,7 @@ function renderHome(el) {
         </div>
         <div class="flex flex-col gap-4 fade-up">
           <div class="relative rounded-2xl overflow-hidden h-52 group cursor-pointer" onclick="navigate('products')">
-            <img src="Product-2.jpeg" alt="Face Masks Collection" loading="lazy"
+            <img src="facemask.png" alt="Face Masks Collection" loading="lazy"
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
             <div class="absolute inset-0 flex flex-col justify-center px-8">
@@ -619,7 +626,7 @@ function renderHome(el) {
             </div>
           </div>
           <div class="relative rounded-2xl overflow-hidden h-52 group cursor-pointer" onclick="navigate('products')">
-            <img src="Product-3.jpeg" alt="Serums and Oils" loading="lazy"
+            <img src="Serum.png" alt="Serums and Oils" loading="lazy"
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
             <div class="absolute inset-0 flex flex-col justify-center px-8">
