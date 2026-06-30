@@ -674,8 +674,8 @@ function renderHome(el) {
       </div>
       <div class="grid md:grid-cols-2 gap-6 fade-up">
         ${[
-          { id:1, name:'Lumi Correct Cream',   price:699, mrp:899, img:'Product-4.jpeg', disc:22 },
-          { id:2, name:'Kumkumadi Face Mask',   price:549, mrp:699, img:'Product-2.jpeg', disc:21 },
+          { id:1, name:'Lumi Correct Cream',   price:699, mrp:899, img:'facecream.png', disc:22 },
+          { id:2, name:'Kumkumadi Face Mask',   price:549, mrp:699, img:'facemask.png', disc:21 },
         ].map(p => `
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 flex flex-col sm:flex-row group hover:shadow-xl transition-shadow">
           <div class="sm:w-52 h-52 sm:h-auto overflow-hidden flex-shrink-0 cursor-pointer" onclick="navigate('product',{id:${p.id}})">
@@ -1042,22 +1042,12 @@ function renderProduct(el, params) {
 
   <div class="fade-up grid md:grid-cols-2 gap-10 mb-16">
     <div>
-      <div class="relative rounded-2xl overflow-hidden bg-stone-50 mb-3 aspect-square">
-        <img id="gal-main" src="${p.gallery[0]}" alt="${p.name}"
+      <div class="relative rounded-2xl overflow-hidden bg-stone-50 aspect-square">
+        <img id="gal-main" src="${p.img}" alt="${p.name}"
              class="w-full h-full object-cover transition-opacity duration-200"
              style="min-height:300px"
              onerror="this.src='https://picsum.photos/seed/${p.id}/800/800'">
       </div>
-      ${p.gallery.length > 1 ? `
-      <div class="flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Image gallery">
-        ${p.gallery.map((img, i) => `
-        <button onclick="switchGallery(${i},'${img}',this)"
-                class="gal-thumb flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${i === 0 ? 'border-herb shadow-md' : 'border-stone-200 opacity-70 hover:opacity-100'}"
-                aria-label="Image ${i + 1}" aria-pressed="${i === 0}">
-          <img src="${img}" alt="View ${i + 1}" class="w-full h-full object-cover"
-               onerror="this.src='https://picsum.photos/seed/${p.id}${i}/200/200'">
-        </button>`).join('')}
-      </div>` : ''}
     </div>
 
     <div>
@@ -1069,11 +1059,6 @@ function renderProduct(el, params) {
       <div class="flex items-center gap-2 mb-4">
         <span aria-label="${p.stars} out of 5">${renderStars(p.stars)}</span>
         <span class="text-sm text-stone-400">${p.stars} (${p.reviews} reviews)</span>
-      </div>
-      <div class="flex items-end gap-3 mb-2">
-        <span class="text-3xl font-bold text-earth">${fmtPrice(p.price)}</span>
-        ${disc ? `<span class="text-lg text-stone-400 line-through">${fmtPrice(p.mrp)}</span>
-        <span class="text-sm font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">${disc}% OFF</span>` : ''}
       </div>
       <p class="text-xs text-stone-400 mb-4">Weight / Volume: <span class="text-stone-600 font-medium">${p.weight}</span></p>
       <p class="text-stone-600 text-sm mb-5">${p.shortDesc}</p>
