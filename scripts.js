@@ -109,10 +109,11 @@ function productCard(p) {
       <p class="text-xs text-herb font-semibold uppercase tracking-widest mb-1">${p.category}</p>
       <h3 class="font-serif text-[15px] font-semibold text-earth leading-snug mb-1 line-clamp-2">${p.name}</h3>
       <p class="text-xs text-stone-400 mb-3 line-clamp-2">${p.shortDesc}</p>
-      <div class="flex items-center gap-1 mb-3" aria-label="${p.stars} stars, ${p.reviews} reviews">
+      <div class="flex items-center gap-1 mb-2" aria-label="${p.stars} stars, ${p.reviews} reviews">
         <span class="text-sm leading-none">${renderStars(p.stars)}</span>
         <span class="text-xs text-stone-400">(${p.reviews})</span>
       </div>
+      <p class="text-base font-bold text-earth mb-3">${fmtPrice(p.price)}</p>
       <button onclick="event.stopPropagation();whatsappBuy('${p.name.replace(/'/g, "\\'")}')"
               class="w-full flex items-center justify-center gap-1.5 text-xs bg-green-500 text-white px-3 py-2 rounded-full hover:bg-green-600 transition-colors shadow-sm"
               aria-label="Buy ${p.name} via WhatsApp">
@@ -1060,6 +1061,7 @@ function renderProduct(el, params) {
         <span aria-label="${p.stars} out of 5">${renderStars(p.stars)}</span>
         <span class="text-sm text-stone-400">${p.stars} (${p.reviews} reviews)</span>
       </div>
+      <p class="text-3xl font-bold text-earth mb-2">${fmtPrice(p.price)}</p>
       <p class="text-xs text-stone-400 mb-4">Weight / Volume: <span class="text-stone-600 font-medium">${p.weight}</span></p>
       <p class="text-stone-600 text-sm mb-5">${p.shortDesc}</p>
 
