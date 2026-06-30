@@ -6,7 +6,7 @@ const PRODUCTS = [
     name: "Lumi Correct Cream",
     category: "Skincare",
     shortDesc: "Ayurvedic Botanical Radiance cream for bright, even-toned skin",
-    price: 699, mrp: 899, weight: "50g", stars: 4.8, reviews: 124,
+    price: 1000, mrp: 1000, weight: "50g", stars: 4.8, reviews: 124,
     badge: "Best Seller",
     img: "facecream.png",
     gallery: [
@@ -28,17 +28,17 @@ const PRODUCTS = [
   },
   {
     id: 2,
-    name: "Kumkumadi Face Mask",
+    name: "Kumkumadi Face Pack",
     category: "Skincare",
     shortDesc: "Ancient saffron-herb powder mask for radiant, even-toned skin",
-    price: 549, mrp: 699, weight: "50g", stars: 4.7, reviews: 98,
+    price: 1200, mrp: 1200, weight: "100g", stars: 4.7, reviews: 98,
     badge: "Top Rated",
     img: "facemask.png",
     gallery: [
       "facemask.png",
       "Product-2.jpeg"
     ],
-    desc: "Our Kumkumadi Face Mask is a traditional Ayurvedic herbal powder blend inspired by the legendary Kumkumadi Tailam — one of Ayurveda's most revered skincare formulations. This beautifully crafted mask combines Rakta Chandan (Red Sandalwood), Manjistha, Mulethi, precious Kesar Threads (Saffron), and aromatic essential oils to deliver a truly transformative skincare ritual.\n\nEach application gently exfoliates, brightens, and purifies while the herbs work synergistically to reduce blemishes and impart a luminous, even-toned glow. The addition of Vetiver and Orange Essential Oil gives the mask a grounding, calming fragrance.",
+    desc: "Our Kumkumadi Face Pack is a traditional Ayurvedic herbal powder blend inspired by the legendary Kumkumadi Tailam — one of Ayurveda's most revered skincare formulations. This beautifully crafted mask combines Rakta Chandan (Red Sandalwood), Manjistha, Mulethi, precious Kesar Threads (Saffron), and aromatic essential oils to deliver a truly transformative skincare ritual.\n\nEach application gently exfoliates, brightens, and purifies while the herbs work synergistically to reduce blemishes and impart a luminous, even-toned glow. The addition of Vetiver and Orange Essential Oil gives the mask a grounding, calming fragrance.",
     benefits: [
       "Brightens and illuminates dull skin",
       "Reduces blemishes, dark spots and uneven tone",
@@ -55,7 +55,7 @@ const PRODUCTS = [
     name: "True-Glow Serum",
     category: "Skincare",
     shortDesc: "Lightweight botanical serum for flawless, luminous skin",
-    price: 799, mrp: 999, weight: "30ml", stars: 4.9, reviews: 76,
+    price: 750, mrp: 750, weight: "30ml", stars: 4.9, reviews: 76,
     badge: "New Arrival",
     img: "Serum.png",
     gallery: [
@@ -76,26 +76,25 @@ const PRODUCTS = [
   },
   {
     id: 4,
-    name: "Ayurvedic Foaming Cleanser",
+    name: "Natural Glow Face Wash",
     category: "Skincare",
-    shortDesc: "Gentle plant-based foaming face wash for clean, fresh skin",
-    price: 449, mrp: 599, weight: "100ml", stars: 4.6, reviews: 61,
+    shortDesc: "Infused with Green Tea & Licorice Extracts — Gently Cleanses • Revives Radiance • Softens Skin",
+    price: 550, mrp: 550, weight: "150 ml", stars: 4.6, reviews: 61,
     badge: "Popular",
     img: "facewash .png",
     gallery: [
       "facewash .png",
       "Product-3.jpeg"
     ],
-    desc: "Our Ayurvedic Foaming Cleanser is a gentle, soap-free face wash that harnesses the power of mild plant-derived cleansers and herbal extracts to remove impurities without stripping your skin's natural moisture barrier.\n\nEnriched with Green Tea Extract, Licorice Extract, Aloe Vera, and skin-conditioning agents, this light foaming formula leaves skin feeling clean, fresh, and perfectly balanced — never tight or dry. Ideal for daily use on all skin types including sensitive skin.",
+    desc: "Estee Aura Natural Glow Face Wash is a gentle foaming cleanser crafted with carefully selected botanical extracts to purify the skin, remove daily impurities, and restore a naturally healthy glow. Enriched with Green Tea and Licorice, it helps refresh dull skin while maintaining softness and hydration.\n\nSulphate Free • Paraben Free\n\nManufactured by: Gursewak Ayurvedic, Patiala\nCustomer Care: +91 98144 82956",
     benefits: [
-      "Gently removes dirt, oil and impurities",
-      "Maintains skin's natural moisture balance",
-      "Soothes and calms with herbal extracts",
-      "Brightens with Licorice and Green Tea",
-      "Suitable for sensitive and all skin types"
+      "Cleanses without stripping natural moisture",
+      "Helps improve skin's fresh, radiant appearance",
+      "Leaves skin soft, smooth, and refreshed",
+      "Suitable for everyday use"
     ],
-    usage: "Wet your face with water. Pump a small amount onto your fingertips and work into a lather. Massage gently onto face and neck in circular motions for 60 seconds. Rinse thoroughly with water. Use morning and evening.",
-    ingredients: "Purified Water (Aqua), Decyl Glucoside, Cocamidopropyl Betaine, Glycerine, Green Tea Extract (Camellia Sinensis), Licorice Extract (Glycyrrhiza Glabra), Aloe Vera Extract (Aloe Barbadensis), Xanthan Gum, Skin-Safe Preservatives, Fragrance",
-    certs: ["SLS Free", "Paraben Free", "Dermatologically Tested", "Cruelty Free"]
+    usage: "Dispense a small amount onto damp skin. Massage gently in circular motions and rinse thoroughly. Use morning and evening for best results.",
+    ingredients: "Purified Water (Aqua), Mild Plant-Derived Cleansers (Decyl Glucoside, Cocamidopropyl Betaine), Glycerin, Green Tea Extract (Camellia Sinensis), Licorice Extract (Glycyrrhiza Glabra), Aloe Vera Extract (Aloe Barbadensis), Xanthan Gum, Skin-Safe Preservative, Fragrance.",
+    certs: ["Sulphate Free", "Paraben Free", "Dermatologically Tested", "Cruelty Free"]
   }
 ];

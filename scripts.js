@@ -87,7 +87,7 @@ function showToast(msg) {
 
 function whatsappBuy(name) {
   const msg = encodeURIComponent(`Hi Estée Aura! I want to buy: ${name}`);
-  window.open(`https://wa.me/919999999999?text=${msg}`, '_blank', 'noopener,noreferrer');
+  window.open(`https://wa.me/919814482956?text=${msg}`, '_blank', 'noopener,noreferrer');
 }
 
 // ─── Product Card ─────────────────────────────────────────────────────────────
@@ -674,8 +674,8 @@ function renderHome(el) {
       </div>
       <div class="grid md:grid-cols-2 gap-6 fade-up">
         ${[
-          { id:1, name:'Lumi Correct Cream',   price:699, mrp:899, img:'facecream.png', disc:22 },
-          { id:2, name:'Kumkumadi Face Mask',   price:549, mrp:699, img:'facemask.png', disc:21 },
+          { id:1, name:'Lumi Correct Cream',   price:1000, mrp:1000, img:'facecream.png', disc:0 },
+          { id:2, name:'Kumkumadi Face Pack',   price:1200, mrp:1200, img:'facemask.png', disc:0 },
         ].map(p => `
         <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 flex flex-col sm:flex-row group hover:shadow-xl transition-shadow">
           <div class="sm:w-52 h-52 sm:h-auto overflow-hidden flex-shrink-0 cursor-pointer" onclick="navigate('product',{id:${p.id}})">
@@ -1185,7 +1185,7 @@ function renderContact(el) {
         <div class="space-y-4">
           ${[
             { icon:'📍', label:'Address', val:'42 Wellness Tower, Connaught Place,<br>New Delhi – 110001' },
-            { icon:'📞', label:'Phone', val:'<a href="tel:+919999999999" class="hover:text-herb transition-colors">+91 99999 99999</a>' },
+            { icon:'📞', label:'Phone', val:'<a href="tel:+919814482956" class="hover:text-herb transition-colors">+91 98144 82956</a>' },
             { icon:'✉️', label:'Email', val:'<a href="mailto:hello@esteeaura.com" class="hover:text-herb transition-colors">hello@esteeaura.com</a>' },
             { icon:'🕐', label:'Hours', val:'Mon–Sat: 9am – 7pm IST' },
           ].map(i=>`
@@ -1202,7 +1202,7 @@ function renderContact(el) {
       <div class="bg-forest rounded-3xl p-6 text-white">
         <h3 class="font-serif text-lg font-semibold mb-2">Need Quick Help?</h3>
         <p class="text-white/70 text-sm mb-4">Chat with us directly on WhatsApp for fastest support.</p>
-        <a href="https://wa.me/919999999999?text=Hi%20Est%C3%A9e%20Aura!%20I%20have%20a%20question."
+        <a href="https://wa.me/919814482956?text=Hi%20Est%C3%A9e%20Aura!%20I%20have%20a%20question."
            target="_blank" rel="noopener noreferrer"
            class="flex items-center justify-center gap-2 bg-green-500 text-white font-bold py-2.5 px-4 rounded-full hover:bg-green-400 transition-colors w-full">
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
