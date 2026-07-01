@@ -6,7 +6,7 @@ const PRODUCTS = [
     name: "Lumi Correct Cream",
     category: "Skincare",
     shortDesc: "Ayurvedic Botanical Radiance cream for bright, even-toned skin",
-    price: 1000, mrp: 1000, weight: "50g", stars: 4.8, reviews: 124,
+    price: 1000, mrp: 1299, weight: "50g", stars: 4.8, reviews: 124,
     badge: "Best Seller",
     img: "facecream.png",
     gallery: [
@@ -31,7 +31,7 @@ const PRODUCTS = [
     name: "Kumkumadi Face Pack",
     category: "Skincare",
     shortDesc: "Ancient saffron-herb powder mask for radiant, even-toned skin",
-    price: 1200, mrp: 1200, weight: "100g", stars: 4.7, reviews: 98,
+    price: 1200, mrp: 1499, weight: "100g", stars: 4.7, reviews: 98,
     badge: "Top Rated",
     img: "facemask.png",
     gallery: [
@@ -55,7 +55,7 @@ const PRODUCTS = [
     name: "True-Glow Serum",
     category: "Skincare",
     shortDesc: "Lightweight botanical serum for flawless, luminous skin",
-    price: 750, mrp: 750, weight: "30ml", stars: 4.9, reviews: 76,
+    price: 750, mrp: 999, weight: "30ml", stars: 4.9, reviews: 76,
     badge: "New Arrival",
     img: "Serum.png",
     gallery: [
@@ -79,7 +79,7 @@ const PRODUCTS = [
     name: "Natural Glow Face Wash",
     category: "Skincare",
     shortDesc: "Infused with Green Tea & Licorice Extracts — Gently Cleanses • Revives Radiance • Softens Skin",
-    price: 550, mrp: 550, weight: "150 ml", stars: 4.6, reviews: 61,
+    price: 550, mrp: 699, weight: "150 ml", stars: 4.6, reviews: 61,
     badge: "Popular",
     img: "facewash .png",
     gallery: [

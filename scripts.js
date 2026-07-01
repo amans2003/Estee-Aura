@@ -113,7 +113,10 @@ function productCard(p) {
         <span class="text-sm leading-none">${renderStars(p.stars)}</span>
         <span class="text-xs text-stone-400">(${p.reviews})</span>
       </div>
-      <p class="text-base font-bold text-earth mb-3">${fmtPrice(p.price)}</p>
+      <div class="flex items-center gap-2 flex-wrap mb-3">
+        <span class="text-base font-bold text-earth">${fmtPrice(p.price)}</span>
+        ${p.mrp > p.price ? `<span class="text-xs text-stone-400 line-through">${fmtPrice(p.mrp)}</span><span class="text-xs font-bold text-red-500 bg-red-50 px-1.5 py-0.5 rounded-full">${disc}% off</span>` : ''}
+      </div>
       <button onclick="event.stopPropagation();whatsappBuy('${p.name.replace(/'/g, "\\'")}')"
               class="w-full flex items-center justify-center gap-1.5 text-xs bg-green-500 text-white px-3 py-2 rounded-full hover:bg-green-600 transition-colors shadow-sm"
               aria-label="Buy ${p.name} via WhatsApp">
@@ -1061,7 +1064,10 @@ function renderProduct(el, params) {
         <span aria-label="${p.stars} out of 5">${renderStars(p.stars)}</span>
         <span class="text-sm text-stone-400">${p.stars} (${p.reviews} reviews)</span>
       </div>
-      <p class="text-3xl font-bold text-earth mb-2">${fmtPrice(p.price)}</p>
+      <div class="flex items-center gap-3 flex-wrap mb-2">
+        <span class="text-3xl font-bold text-earth">${fmtPrice(p.price)}</span>
+        ${disc ? `<span class="text-lg text-stone-400 line-through">${fmtPrice(p.mrp)}</span><span class="text-sm font-bold text-red-500 bg-red-50 px-2.5 py-1 rounded-full">${disc}% off</span>` : ''}
+      </div>
       <p class="text-xs text-stone-400 mb-4">Weight / Volume: <span class="text-stone-600 font-medium">${p.weight}</span></p>
       <p class="text-stone-600 text-sm mb-5">${p.shortDesc}</p>
 
